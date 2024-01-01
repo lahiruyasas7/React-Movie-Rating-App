@@ -3,7 +3,7 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 const Navbar = () => {
   return (
     <div>
-      <Nav>
+      <Nav className="w-full flex gap-2">
         <NavItem>
           <NavLink active href="/">
             Home
@@ -12,7 +12,7 @@ const Navbar = () => {
         <NavItem>
           <NavLink href="/rated">Rated</NavLink>
         </NavItem>
-        <NavItem>
+        <NavItem className="ml-auto">
           <NavLink href="/auth">
             Auth
           </NavLink>
