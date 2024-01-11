@@ -48,7 +48,7 @@ const Auth = () => {
         <Row className="mb-2">
           <h4>Welcome! You Can Login By registering</h4>
         </Row>
-        <Form>
+        <Form onSubmit={handleSubmit(loginHandle)}>
           <Col className="m-2 justify-start">
             <Label>User Name</Label>
             <Controller
@@ -70,7 +70,7 @@ const Auth = () => {
                 </Col>
               )}
             />
-            <Label>Password</Label>
+            <Label className="mt-3">Password</Label>
             <Controller
               name="password"
               control={control}
