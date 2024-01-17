@@ -7,7 +7,6 @@ export function* getAllMovies() {
     const { data } = yield axios.get(
       `https://api.themoviedb.org/3/discover/movie?api_key=96b9dd19fdc034edccdba6d81881343a`
     );
-    console.log('data', data);
     
     yield put({ type: actionTypes.GET_MOVIES_SUCCESS, data: data });
   } catch(e: any) {
