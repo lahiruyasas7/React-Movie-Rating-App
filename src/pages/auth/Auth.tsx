@@ -44,13 +44,14 @@ const Auth = () => {
 
   return (
     <div className="flex justify-center my-3 items-center">
-      <Card className="w-1/2 p-2">
-        <Row className="mb-2">
-          <h4>Welcome! You Can Login By registering</h4>
+      <Card className="lg:w-1/2 p-4">
+        <Row className="mb-2 text-center " lg={12}>
+          <h4 className="text-xs md:text-xl">Welcome! You Can Login By registering</h4>
         </Row>
         <Form onSubmit={handleSubmit(loginHandle)}>
-          <Col className="m-2 justify-start">
-            <Label>User Name</Label>
+          <Row lg={12}>
+          <Col className="m-2">
+            <Label className="font-semibold">User Name</Label>
             <Controller
               name="loginEmail"
               control={control}
@@ -70,7 +71,12 @@ const Auth = () => {
                 </Col>
               )}
             />
-            <Label className="mt-3">Password</Label>
+           
+          </Col>
+          </Row>
+          <Row className="mt-" lg={12}>
+                <Col className="m-2">
+                <Label className="font-semibold">Password</Label>
             <Controller
               name="password"
               control={control}
@@ -86,7 +92,8 @@ const Auth = () => {
                 </Col>
               )}
             />
-          </Col>
+                </Col>
+          </Row>
           <Row>
             <Col>
               <Button className="">Login</Button>
