@@ -39,7 +39,7 @@ const SingleViewModal: React.FC<SingleViewModalProps> = ({
               SVGstyle={{ display: "inline" }}
             />
             <div className="d-flex gap-2 mt-2 items-center">
-              <h4>{selectedMovieData?.vote_average}</h4>
+              <h4>{Number(selectedMovieData?.vote_average).toFixed(1)}</h4>
               <h5>({selectedMovieData?.vote_count})</h5>
             </div>
           </Col>
