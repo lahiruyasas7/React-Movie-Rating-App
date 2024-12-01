@@ -1,5 +1,5 @@
 import axios from "axios";
-import { all, fork, put, takeLatest } from "redux-saga/effects";
+import { put, takeLatest } from "redux-saga/effects";
 import { actionTypes } from "./actions";
 
 export function* getAllMovies() {
@@ -10,7 +10,7 @@ export function* getAllMovies() {
     
     yield put({ type: actionTypes.GET_MOVIES_SUCCESS, data: data });
   } catch(e: any) {
-    console.error(e.response?.data?.message || 'Error in retrieving students data');
+    console.error(e.response?.data?.message || 'Error in retrieving movie data');
     yield put({type: actionTypes.GET_MOVIES_FAIL})
   }
 }
