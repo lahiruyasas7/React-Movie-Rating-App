@@ -38,7 +38,7 @@ const Home = () => {
   console.log("data", selectedMovieData);
   return (
     <>
-      <div className="w-full flex flex-wrap gap-12 p-5">
+      <div className="w-full flex flex-wrap gap-12 p-5 justify-center">
         {moviesList &&
           moviesList.results.map((data: MovieData) => (
             <div key={data.id} onClick={() => selectedCardHandler(data)}>
