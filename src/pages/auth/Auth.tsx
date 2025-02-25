@@ -7,6 +7,7 @@ import {
   Input,
   Form,
   FormFeedback,
+  NavLink,
 } from "reactstrap";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -109,9 +110,12 @@ const Auth = () => {
               />
             </Col>
           </Row>
-          <Row>
+          <NavLink active href="/register" className="bg-blue-600">
+            Click here to Register for free
+          </NavLink>
+          <Row className="mt-2">
             <Col>
-              <Button className="">Login</Button>
+              <Button className="w-28">Login</Button>
             </Col>
           </Row>
         </Form>
