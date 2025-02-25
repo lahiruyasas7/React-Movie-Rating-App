@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
-import { Form } from "react-router-dom";
+//import { Form } from "react-router-dom";
 import { Button, Card, Col, FormFeedback, Input, Label, Row } from "reactstrap";
 import * as yup from "yup";
 
@@ -16,6 +16,9 @@ const schema = yup
     password: yup.string().required(),
     firstName: yup.string().required(),
     lastName: yup.string().required(),
+    phone: yup.string().optional(),
+    address: yup.string().optional(),
+    dateOfBirth: yup.string().optional(),
   })
   .required();
 
@@ -24,10 +27,10 @@ const RegisterPage = () => {
     email: string;
     firstName: string;
     lastName: string;
-    phone: string;
-    address: string;
-    dateOfBirth: string;
-    password: string;
+    phone?: string;
+    address?: string;
+    dateOfBirth?: string;
+    password?: string;
   }
   const defaultValues = {
     email: "",
@@ -51,11 +54,14 @@ const RegisterPage = () => {
   };
   return (
     <div className="flex justify-center my-3 items-center">
-      <Card className="lg:w-1/2 p-4">
+      <Card
+        className="lg:w-1/2 p-4 bg-[#4287f5]"
+        style={{ backgroundColor: "#829bc4" }}
+      >
         <Row className="mb-2 text-center " lg={12}>
           <h4 className="text-xs md:text-xl">Register</h4>
         </Row>
-        <Form onSubmit={handleSubmit(registerHandler)}>
+        <form onSubmit={handleSubmit(registerHandler)}>
           <Row lg={12}>
             <Col className="m-2">
               <Label className="font-semibold">Email</Label>
@@ -112,7 +118,7 @@ const RegisterPage = () => {
                       id="firstName"
                       type="text"
                       placeholder="john"
-                      invalid={!!errors.email}
+                      invalid={!!errors.firstName}
                       {...field}
                     />
                     <FormFeedback>First Name is Required</FormFeedback>
@@ -133,13 +139,10 @@ const RegisterPage = () => {
                       id="lastName"
                       type="text"
                       placeholder="Doe"
-                      invalid={!!errors.email}
+                      invalid={!!errors.lastName}
                       {...field}
                     />
-                    <FormFeedback>
-                      The email address you provided is not valid. Please make
-                      sure you use a valid email format (e.g., name@example.com)
-                    </FormFeedback>
+                    <FormFeedback>The last Name is required</FormFeedback>
                   </Col>
                 )}
               />
@@ -149,14 +152,14 @@ const RegisterPage = () => {
             <Col className="m-2">
               <Label className="font-semibold">Phone Number</Label>
               <Controller
-                name="lastName"
+                name="phone"
                 control={control}
                 render={({ field }) => (
                   <Col>
                     <Input
                       id="phone"
                       type="text"
-                      placeholder="Doe"
+                      placeholder="+94xxxxxxxxx"
                       //invalid={!!errors.email}
                       {...field}
                     />
@@ -176,7 +179,7 @@ const RegisterPage = () => {
                     <Input
                       id="phone"
                       type="text"
-                      placeholder="Doe"
+                      placeholder="123 Main Street, Anytown, CA 12345"
                       //invalid={!!errors.email}
                       {...field}
                     />
@@ -189,15 +192,15 @@ const RegisterPage = () => {
             <Col className="m-2">
               <Label className="font-semibold">Date Of Birth</Label>
               <Controller
-                name="lastName"
+                name="dateOfBirth"
                 control={control}
                 render={({ field }) => (
                   <Col>
                     <Input
                       id="dateOfBirth"
                       type="text"
-                      placeholder="Doe"
-                      invalid={!!errors.email}
+                      placeholder="20xx/xx/xx"
+                      //invalid={!!errors.email}
                       {...field}
                     />
                   </Col>
@@ -210,7 +213,7 @@ const RegisterPage = () => {
               <Button className="">Register</Button>
             </Col>
           </Row>
-        </Form>
+        </form>
       </Card>
     </div>
   );
