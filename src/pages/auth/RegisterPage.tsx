@@ -3,6 +3,8 @@ import { Controller, useForm } from "react-hook-form";
 //import { Form } from "react-router-dom";
 import { Button, Card, Col, FormFeedback, Input, Label, Row } from "reactstrap";
 import * as yup from "yup";
+import { registerDataType, registerUser } from "../../redux/actions";
+import { useDispatch } from "react-redux";
 
 const schema = yup
   .object()
@@ -23,15 +25,7 @@ const schema = yup
   .required();
 
 const RegisterPage = () => {
-  interface registerDataType {
-    email: string;
-    firstName: string;
-    lastName: string;
-    phone?: string;
-    address?: string;
-    dateOfBirth?: string;
-    password?: string;
-  }
+  const dispatch = useDispatch();
   const defaultValues = {
     email: "",
     firstName: "",
@@ -50,6 +44,7 @@ const RegisterPage = () => {
   const registerHandler = (data: registerDataType) => {
     console.log("registerData", data);
     if (data) {
+      dispatch(registerUser(data));
     }
   };
   return (
@@ -172,7 +167,7 @@ const RegisterPage = () => {
             <Col className="m-2">
               <Label className="font-semibold">Address</Label>
               <Controller
-                name="lastName"
+                name="address"
                 control={control}
                 render={({ field }) => (
                   <Col>
