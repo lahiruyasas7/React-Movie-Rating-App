@@ -5,6 +5,8 @@ import { Button, Card, Col, FormFeedback, Input, Label, Row } from "reactstrap";
 import * as yup from "yup";
 import { registerDataType, registerUser } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { Eye, EyeOff } from "react-feather";
 
 const schema = yup
   .object()
@@ -25,6 +27,7 @@ const schema = yup
   .required();
 
 const RegisterPage = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const defaultValues = {
     email: "",
@@ -46,6 +49,10 @@ const RegisterPage = () => {
     if (data) {
       dispatch(registerUser(data));
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
   return (
     <div className="flex justify-center my-3 items-center">
@@ -89,13 +96,26 @@ const RegisterPage = () => {
                 control={control}
                 render={({ field }) => (
                   <Col>
-                    <Input
-                      id="password"
-                      className="input-group-merge"
-                      invalid={!!errors.password}
-                      {...field}
-                    />
-                    <FormFeedback>Please enter password</FormFeedback>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        className="input-group-merge"
+                        type={showPassword ? "text" : "password"}
+                        invalid={!!errors.password}
+                        {...field}
+                      />
+                      <span
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeOff size={20} />
+                        )}
+                      </span>
+                      <FormFeedback>Please enter password</FormFeedback>
+                    </div>
                   </Col>
                 )}
               />
