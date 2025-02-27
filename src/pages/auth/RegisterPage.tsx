@@ -1,7 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 //import { Form } from "react-router-dom";
-import { Button, Card, Col, FormFeedback, Input, Label, Row } from "reactstrap";
+import {
+  Button,
+  Card,
+  Col,
+  FormFeedback,
+  Input,
+  Label,
+  Row,
+  NavLink,
+} from "reactstrap";
 import * as yup from "yup";
 import { registerDataType, registerUser } from "../../redux/actions";
 import { useDispatch } from "react-redux";
@@ -223,11 +232,17 @@ const RegisterPage = () => {
               />
             </Col>
           </Row>
-          <Row>
+          <Row className="my-3">
             <Col>
               <Button className="">Register</Button>
             </Col>
           </Row>
+
+          <div className="text-blue-600 my-3">
+            <NavLink active href="/auth">
+              Go Back to login Page
+            </NavLink>
+          </div>
         </form>
       </Card>
     </div>
