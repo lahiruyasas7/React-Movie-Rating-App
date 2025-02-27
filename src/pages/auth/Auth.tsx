@@ -110,9 +110,11 @@ const Auth = () => {
               />
             </Col>
           </Row>
-          <NavLink active href="/register" className="bg-blue-600">
-            Click here to Register for free
-          </NavLink>
+          <div className="text-blue-600 my-3">
+            <NavLink active href="/register">
+              Click here to Register for free
+            </NavLink>
+          </div>
           <Row className="mt-2">
             <Col>
               <Button className="w-28">Login</Button>
