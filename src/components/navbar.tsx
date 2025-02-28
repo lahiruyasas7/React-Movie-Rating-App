@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Nav, NavItem, NavLink } from "reactstrap";
 import Swal from "sweetalert2";
 
@@ -11,10 +12,12 @@ const Navbar = () => {
     };
   }
   const [userData, setUserData] = useState<UserData>();
+
+  const navigate = useNavigate();
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     setUserData(user);
-  }, [userData]);
+  }, []);
   console.log("userData", userData);
 
   const logoutHandler = (
@@ -37,6 +40,8 @@ const Navbar = () => {
     }).then((result: any) => {
       if (result.isConfirmed) {
         localStorage.removeItem("user");
+        setUserData(undefined);
+        navigate("/");
       }
     });
   };
