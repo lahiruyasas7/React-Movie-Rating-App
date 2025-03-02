@@ -33,6 +33,7 @@ export function* loginUser(action: any) {
       window.localStorage.setItem(USER_ITEM, JSON.stringify(res?.data));
       location.replace("/");
     });
+    toast.success("User Login Success");
     yield put({
       type: actionTypes.LOGIN_LOADER_HANDLE,
       payload: false,

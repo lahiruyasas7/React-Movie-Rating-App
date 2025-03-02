@@ -15,8 +15,11 @@ import { Controller, useForm } from "react-hook-form";
 //import { dispatch } from "../../utils/common-hooks";
 import { loginListen } from "../../redux/actions";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { Eye, EyeOff } from "react-feather";
 
 const Auth = () => {
+  const [showPassword, setShowPassword] = useState(false);
   interface LoginDataType {
     password: string;
     loginEmail: string;
@@ -55,6 +58,10 @@ const Auth = () => {
     if (data) {
       dispatch(loginListen(payload, history));
     }
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -98,12 +105,26 @@ const Auth = () => {
                 control={control}
                 render={({ field }) => (
                   <Col>
-                    <Input
-                      id="password"
-                      className="input-group-merge"
-                      invalid={!!errors.password}
-                      {...field}
-                    />
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        className="input-group-merge"
+                        type={showPassword ? "text" : "password"}
+                        invalid={!!errors.password}
+                        {...field}
+                      />
+
+                      <span
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                        onClick={togglePasswordVisibility}
+                      >
+                        {showPassword ? (
+                          <Eye size={20} />
+                        ) : (
+                          <EyeOff size={20} />
+                        )}
+                      </span>
+                    </div>
                     <FormFeedback>Please enter password</FormFeedback>
                   </Col>
                 )}

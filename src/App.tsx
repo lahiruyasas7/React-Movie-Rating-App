@@ -5,6 +5,7 @@ import Auth from "./pages/auth/Auth";
 import Home from "./pages/home/Home";
 import Footer from "./components/footer"
 import RegisterPage from "./pages/auth/RegisterPage";
+import SaveMovies from "./pages/savedMovies/SaveMovies";
 
 function App() {
   return <div>
@@ -13,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>}/>
         <Route path="/auth" element={<Auth/>}/>
-        <Route path="/rated" element={<h1>Rated</h1>}/>
+        <Route path="/rated" element={<SaveMovies/>}/>
         <Route path="/register" element={<RegisterPage/>}/>
       </Routes>
       <Footer/>
