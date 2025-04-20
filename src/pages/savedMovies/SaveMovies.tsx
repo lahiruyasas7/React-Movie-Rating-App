@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 function SaveMovies() {
   const [value, setValue] = useState(0);
@@ -30,7 +30,12 @@ function SaveMovies() {
         {randomUser?.data?.results[0]?.name?.last}
       </div>
       <div>
-        <img src={randomUser?.data?.results[0]?.picture?.large} alt="user image" width="500" height="600"/>
+        <img
+          src={randomUser?.data?.results[0]?.picture?.large}
+          alt="user image"
+          width="500"
+          height="600"
+        />
       </div>
     </>
   );
