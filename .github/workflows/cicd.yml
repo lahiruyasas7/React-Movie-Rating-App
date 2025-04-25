@@ -28,4 +28,7 @@ jobs:
           context: .
           push: true
           tags: lahiruyasas/react-movie-rating-app:latest
+          build-args: |
+          VITE_API_URL=${{ secrets.VITE_API_URL }}
+
         
