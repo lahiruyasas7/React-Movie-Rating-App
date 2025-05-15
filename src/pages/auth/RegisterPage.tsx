@@ -166,7 +166,7 @@ const RegisterPage = () => {
                       invalid={!!errors.lastName}
                       {...field}
                     />
-                    <FormFeedback>The last Name is required</FormFeedback>
+                    <FormFeedback>The Last Name is required</FormFeedback>
                   </Col>
                 )}
               />
