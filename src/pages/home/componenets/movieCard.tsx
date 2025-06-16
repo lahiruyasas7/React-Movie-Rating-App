@@ -1,34 +1,64 @@
-import {
-  Label,
-  Card,
-  CardBody,
-  CardTitle,
-  Row,
-  Col,
-} from "reactstrap";
-import '../../../assests/css/home.css'
+import { Label, Card, CardBody, CardTitle, Row, Col } from "reactstrap";
+import "../../../assests/css/home.css";
+import { Star } from "react-feather";
 
 const MovieCard = ({ movieData }: any) => {
   console.log("movieData", movieData);
   return (
-    <div style={{cursor: 'pointer'}}>
-      <Card className="movie-card shadow overflow-hidden cursor-pointer clickable" style={{ width: "300px", height: "400px" }}>
+    // <div style={{cursor: 'pointer'}}>
+    //   <Card className="movie-card shadow overflow-hidden cursor-pointer clickable" style={{ width: "300px", height: "400px" }}>
+    //     <img
+    //       className="w-full object-fill rounded custom-placeholder"
+    //       style={{ height: "250px" }}
+    //       alt="Sample"
+    //       src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`}
+    //     />
+    //     <CardBody>
+    //       <CardTitle tag="h5">{movieData?.title}</CardTitle>
+
+    //       <Label>{`Release data ${movieData?.release_date}`}</Label>
+    //       <Row>
+    //         <Col>
+    //           <h6>{`Ratings ${Number(movieData?.vote_average).toFixed(1)}`}</h6>
+    //         </Col>
+    //         <Col>
+    //           <h6>{`Vote Count ${movieData?.vote_count}`}</h6>
+    //         </Col>
+    //       </Row>
+    //     </CardBody>
+    //   </Card>
+    // </div>
+    <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
+      <Card
+        className="movie-card shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl bg-white/10 backdrop-blur-lg border border-gray-200"
+        style={{ width: "300px", height: "380px", cursor: "pointer" }}
+      >
         <img
-          className="w-full object-fill rounded custom-placeholder"
-          style={{ height: "250px" }}
-          alt="Sample"
+          className="w-full h-[250px] object-fill rounded-t-2xl"
+          alt={movieData?.title}
           src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`}
         />
-        <CardBody>
-          <CardTitle tag="h5">{movieData?.title}</CardTitle>
 
-          <Label>{`Release data ${movieData?.release_date}`}</Label>
-          <Row>
-            <Col>
-              <h6>{`Ratings ${Number(movieData?.vote_average).toFixed(1)}`}</h6>
+        <CardBody className="px-4 pt-3 pb-2 text-gray-900">
+          <CardTitle
+            tag="h5"
+            className="font-semibold text-base truncate"
+            title={movieData?.title}
+          >
+            🎬 {movieData?.title}
+          </CardTitle>
+
+          <Label className="text-sm text-gray-600 block mb-2">
+            📅 Release: {movieData?.release_date}
+          </Label>
+
+          <Row className="text-sm text-gray-800 font-medium">
+            <Col className="flex items-center space-x-1">
+              <Star className="text-yellow-400 w-4 h-4" />
+              <span>{Number(movieData?.vote_average).toFixed(1)}</span>
             </Col>
-            <Col>
-              <h6>{`Vote Count ${movieData?.vote_count}`}</h6>
+            <Col className="text-right">
+              <span>🗳 {movieData?.vote_count} votes</span>
             </Col>
           </Row>
         </CardBody>
