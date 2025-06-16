@@ -65,84 +65,96 @@ const Auth = () => {
   };
 
   return (
-    <div className="flex justify-center my-3 items-center">
-      <Card className="lg:w-1/2 p-4">
-        <Row className="mb-2 text-center " lg={12}>
-          <h4 className="text-xs md:text-xl">
-            Welcome! You Can Login By registering
-          </h4>
-        </Row>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-tr from-zinc-900 via-gray-900 to-black px-4">
+      <div className="w-full max-w-xl bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-2xl">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Welcome Back 👋
+          </h2>
+          <p className="text-sm text-gray-300">
+            Login to explore trending movies and TV shows.
+          </p>
+        </div>
+
         <Form onSubmit={handleSubmit(loginHandle)}>
-          <Row lg={12}>
-            <Col className="m-2">
-              <Label className="font-semibold">User Name</Label>
-              <Controller
-                name="loginEmail"
-                control={control}
-                render={({ field }) => (
-                  <Col>
+          <div className="mb-5">
+            <Label className="block text-gray-200 font-medium mb-1">
+              Email
+            </Label>
+            <Controller
+              name="loginEmail"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <Input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="john@example.com"
+                    className="w-full px-4 py-2 rounded-xl bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    invalid={!!errors.loginEmail}
+                    {...field}
+                  />
+                  {errors.loginEmail && (
+                    <p className="mt-1 text-sm text-red-400">
+                      Please enter a valid email address.
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
+
+          <div className="mb-5">
+            <Label className="block text-gray-200 font-medium mb-1">
+              Password
+            </Label>
+            <Controller
+              name="password"
+              control={control}
+              render={({ field }) => (
+                <>
+                  <div className="relative">
                     <Input
-                      id="loginEmail"
-                      type="email"
-                      placeholder="john@example.com"
-                      invalid={!!errors.loginEmail}
+                      id="password"
+                      type={showPassword ? "text" : "password"}
+                      className="w-full px-4 py-2 rounded-xl bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      invalid={!!errors.password}
                       {...field}
                     />
-                    <FormFeedback>
-                      The email address you provided is not valid. Please make
-                      sure you use a valid email format (e.g., name@example.com)
-                    </FormFeedback>
-                  </Col>
-                )}
-              />
-            </Col>
-          </Row>
-          <Row className="mt-" lg={12}>
-            <Col className="m-2">
-              <Label className="font-semibold">Password</Label>
-              <Controller
-                name="password"
-                control={control}
-                render={({ field }) => (
-                  <Col>
-                    <div className="relative">
-                      <Input
-                        id="password"
-                        className="input-group-merge"
-                        type={showPassword ? "text" : "password"}
-                        invalid={!!errors.password}
-                        {...field}
-                      />
+                    <span
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 cursor-pointer"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+                    </span>
+                  </div>
+                  {errors.password && (
+                    <p className="mt-1 text-sm text-red-400">
+                      Password is required.
+                    </p>
+                  )}
+                </>
+              )}
+            />
+          </div>
 
-                      <span
-                        className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-                        onClick={togglePasswordVisibility}
-                      >
-                        {showPassword ? (
-                          <Eye size={20} />
-                        ) : (
-                          <EyeOff size={20} />
-                        )}
-                      </span>
-                    </div>
-                    <FormFeedback>Please enter password</FormFeedback>
-                  </Col>
-                )}
-              />
-            </Col>
-          </Row>
-          <div className="text-blue-600 my-3">
-            <NavLink active href="/register">
-              Click here to Register for free
+          <div className="text-sm text-center text-indigo-400 mb-6">
+            Don't have an account?{" "}
+            <NavLink
+              href="/register"
+              className="underline hover:text-indigo-300"
+            >
+              Register for free
             </NavLink>
           </div>
-          <Row className="mt-2">
-            <Col>
-              <Button className="w-28">Login</Button>
-            </Col>
-          </Row>
+
+          <div className="flex justify-center">
+            <Button className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2 rounded-xl transition duration-300 w-full max-w-[150px]">
+              Login
+            </Button>
+          </div>
         </Form>
-      </Card>
+      </div>
     </div>
   );
 };
