@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Film, LogIn, Tv } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { Button, Nav, NavItem, NavLink } from "reactstrap";
 import Swal from "sweetalert2";
@@ -47,28 +48,63 @@ const Navbar = () => {
   };
 
   return (
-    <div>
-      <Nav className="w-full flex gap-2">
+    <Nav className="flex space-x-4 md:space-x-6 text-white font-medium text-sm md:text-base">
+      <NavItem>
+        <NavLink
+          href="/"
+          className="hover:text-[#facc15] text-white transition-colors duration-300"
+        >
+          <Film className="inline-block w-4 h-4 mr-1" /> Home
+        </NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink
+          href="/movies"
+          className="hover:text-[#facc15] text-white transition-colors duration-300"
+        >
+          <Film className="inline-block w-4 h-4 mr-1" /> Movies
+        </NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink
+          href="/tvshows"
+          className="hover:text-[#facc15] text-white transition-colors duration-300"
+        >
+          <Tv className="inline-block w-4 h-4 mr-1" /> TV Shows
+        </NavLink>
+      </NavItem>
+
+      <NavItem>
+        <NavLink
+          href="/trending"
+          className="hover:text-[#facc15] text-white transition-colors duration-300"
+        >
+          🔥 Trending
+        </NavLink>
+      </NavItem>
+
+      {!userData?.token ? (
         <NavItem>
-          <NavLink active href="/">
-            Home
+          <NavLink
+            href="/auth"
+            className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
+          >
+            <LogIn className="inline-block w-4 h-4 mr-1" /> Login
           </NavLink>
         </NavItem>
+      ) : (
         <NavItem>
-          <NavLink href="/rated">Rated</NavLink>
+          <NavLink
+            href="/auth"
+            className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
+          >
+            <LogIn className="inline-block w-4 h-4 mr-1" /> Log Out
+          </NavLink>
         </NavItem>
-        {!userData?.token && (
-          <NavItem className="ml-auto">
-            <NavLink href="/auth">Auth</NavLink>
-          </NavItem>
-        )}
-        {userData?.token && (
-          <NavItem className="ml-auto">
-            <Button onClick={logoutHandler}>Log out</Button>
-          </NavItem>
-        )}
-      </Nav>
-    </div>
+      )}
+    </Nav>
   );
 };
 
