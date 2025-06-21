@@ -3,11 +3,14 @@ import "../../../assests/css/home.css";
 import { Star } from "react-feather";
 
 const MovieCard = ({ movieData }: any) => {
-  console.log("movieData", movieData);
   return (
     <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
       <Card
-        className="movie-card shadow-lg rounded-2xl overflow-hidden hover:shadow-2xl bg-white/10 backdrop-blur-lg border border-gray-200"
+        className="movie-card bg-gradient-to-br from-gray-800 via-zinc-900 to-black 
+             hover:from-gray-700 hover:via-gray-800 hover:to-black 
+              backdrop-blur-md 
+             text-white shadow-xl rounded-2xl transition-transform 
+             transform hover:scale-105 duration-300 ease-in-out"
         style={{ width: "300px", height: "380px", cursor: "pointer" }}
       >
         <img
@@ -25,11 +28,11 @@ const MovieCard = ({ movieData }: any) => {
             🎬 {movieData?.title}
           </CardTitle>
 
-          <Label className="text-sm text-gray-600 block mb-2">
+          <Label className="text-sm text-white block mb-2">
             📅 Release: {movieData?.release_date}
           </Label>
 
-          <Row className="text-sm text-gray-800 font-medium">
+          <Row className="text-sm text-white font-medium">
             <Col className="flex items-center space-x-1">
               <Star className="text-yellow-400 w-4 h-4" />
               <span>{Number(movieData?.vote_average).toFixed(1)}</span>
