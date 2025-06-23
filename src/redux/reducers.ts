@@ -21,12 +21,12 @@ const reducer = (state = initialState, action: any) => {
     case actionTypes.GET_TV_SERIES_SUCCESS:
       return {
         ...state,
-        moviesList: action.data,
+        tvSeriesList: action.data,
       };
     case actionTypes.GET_TV_SERIES_FAIL:
       return {
         ...state,
-        moviesList: null,
+        tvSeriesList: null,
       };
     default:
       return state;
