@@ -69,7 +69,7 @@ const Navbar = () => {
 
       <NavItem>
         <NavLink
-          href="/tvshows"
+          href="/tv-series"
           className="hover:text-[#facc15] text-white transition-colors duration-300"
         >
           <Tv className="inline-block w-4 h-4 mr-1" /> TV Shows
