@@ -7,6 +7,9 @@ export const actionTypes = {
   LOGIN_LOADER_HANDLE: "LOGIN_LOADER_HANDLE",
   IS_LOGIN_ERROR: "IS_LOGIN_ERROR",
   REGISTER_USER: "REGISTER_USER",
+  GET_ALL_TV_SERIES: "GET_ALL_TV_SERIES",
+  GET_TV_SERIES_SUCCESS: "GET_TV_SERIES_SUCCESS",
+  GET_TV_SERIES_FAIL: "GET_TV_SERIES_FAIL",
 };
 
 export interface registerDataType {
@@ -21,6 +24,10 @@ export interface registerDataType {
 
 export function getAllMovies() {
   return { type: actionTypes.GET_ALL_MOVIES };
+}
+
+export function getAllTvSeries() {
+  return { type: actionTypes.GET_ALL_TV_SERIES };
 }
 
 export const loginListen = (data: any, history: any) => {

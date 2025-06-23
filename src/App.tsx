@@ -6,6 +6,7 @@ import Home from "./pages/home/Home";
 import Footer from "./components/footer"
 import RegisterPage from "./pages/auth/RegisterPage";
 import SaveMovies from "./pages/savedMovies/SaveMovies";
+import TvSeries from "./pages/tv-series/TvSeries";
 
 function App() {
   return <div>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/auth" element={<Auth/>}/>
         <Route path="/rated" element={<SaveMovies/>}/>
         <Route path="/register" element={<RegisterPage/>}/>
+        <Route path="/tv-series" element={<TvSeries/>}/>
       </Routes>
       <Footer/>
     </Router>

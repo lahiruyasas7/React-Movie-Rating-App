@@ -21,6 +21,21 @@ export function* getAllMovies() {
   }
 }
 
+export function* getAllTvSeriesSaga() {
+  try {
+    const { data } = yield axios.get(
+      `https://api.themoviedb.org/3/discover/tv?api_key=96b9dd19fdc034edccdba6d81881343a`
+    );
+
+    yield put({ type: actionTypes.GET_TV_SERIES_SUCCESS, data: data });
+  } catch (e: any) {
+    console.error(
+      e.response?.data?.message || "Error in retrieving Tv series data"
+    );
+    yield put({ type: actionTypes.GET_TV_SERIES_FAIL });
+  }
+}
+
 export function* loginUser(action: any) {
   const { data } = action;
   try {
@@ -78,6 +93,7 @@ export function* registerUserSaga(action: {
 
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
+  yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
   yield takeLatest(actionTypes.LOGIN_LISTEN, loginUser);
   yield takeLatest(actionTypes.REGISTER_USER, registerUserSaga);
 }

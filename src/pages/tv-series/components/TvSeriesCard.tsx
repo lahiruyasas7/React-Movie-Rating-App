@@ -1,8 +1,8 @@
-import { Label, Card, CardBody, CardTitle, Row, Col } from "reactstrap";
-import "../../../assests/css/home.css";
+import React from "react";
 import { Star } from "react-feather";
+import { Card, CardBody, CardTitle, Col, Label, Row } from "reactstrap";
 
-const MovieCard = ({ movieData }: any) => {
+function TvSeriesCard({tvSeriesData}:any) {
   return (
     <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
       <Card
@@ -15,36 +15,36 @@ const MovieCard = ({ movieData }: any) => {
       >
         <img
           className="w-full h-[250px] object-fill rounded-t-2xl"
-          alt={movieData?.title}
-          src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`}
+          alt={tvSeriesData?.title}
+          src={`https://image.tmdb.org/t/p/w500${tvSeriesData?.poster_path}`}
         />
 
         <CardBody className="px-4 pt-3 pb-2 text-gray-900">
           <CardTitle
             tag="h5"
             className="font-semibold text-base truncate"
-            title={movieData?.title}
+            title={tvSeriesData?.title}
           >
-            🎬 {movieData?.title}
+            🎬 {tvSeriesData?.title}
           </CardTitle>
 
           <Label className="text-sm text-white block mb-2">
-            📅 Release: {movieData?.release_date}
+            📅 Release: {tvSeriesData?.release_date}
           </Label>
 
           <Row className="text-sm text-white font-medium">
             <Col className="flex items-center space-x-1">
               <Star className="text-yellow-400 w-4 h-4" />
-              <span>{Number(movieData?.vote_average).toFixed(1)}</span>
+              <span>{Number(tvSeriesData?.vote_average).toFixed(1)}</span>
             </Col>
             <Col className="text-right">
-              <span>🗳 {movieData?.vote_count} votes</span>
+              <span>🗳 {tvSeriesData?.vote_count} votes</span>
             </Col>
           </Row>
         </CardBody>
       </Card>
     </div>
   );
-};
+}
 
-export default MovieCard;
+export default TvSeriesCard;
