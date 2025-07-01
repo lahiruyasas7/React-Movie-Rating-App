@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const Navbar = () => {
   interface UserData {
-    token: string;
+    accessToken: string;
     user: {
       email: string;
       userId: string;
@@ -85,7 +85,7 @@ const Navbar = () => {
         </NavLink>
       </NavItem>
 
-      {!userData?.token ? (
+      {!userData?.accessToken ? (
         <NavItem>
           <NavLink
             href="/auth"
@@ -95,14 +95,12 @@ const Navbar = () => {
           </NavLink>
         </NavItem>
       ) : (
-        <NavItem>
-          <NavLink
-            href="/auth"
-            className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
-          >
-            <LogIn className="inline-block w-4 h-4 mr-1" /> Log Out
-          </NavLink>
-        </NavItem>
+        <Button
+          onClick={logoutHandler}
+          className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
+        >
+          <LogIn className="inline-block w-4 h-4 mr-1" /> Log Out
+        </Button>
       )}
     </Nav>
   );
