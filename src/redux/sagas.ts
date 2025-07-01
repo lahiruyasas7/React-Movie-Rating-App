@@ -46,7 +46,7 @@ export function* loginUser(action: any) {
 
     yield API.post(`auth/login`, data).then((res) => {
       window.localStorage.setItem(USER_ITEM, JSON.stringify(res?.data));
-      location.replace("/");
+      //location.replace("/");
     });
     toast.success("User Login Success");
     yield put({
@@ -91,9 +91,25 @@ export function* registerUserSaga(action: {
   }
 }
 
+export function* getUserDetailsSaga(action: { type: string; id: string }) {
+  try {
+    const { data } = yield API.get(`auth/${action.id}`);
+    yield put({
+      type: actionTypes.GET_USER_DETAILS_SUCCESS,
+      data: data,
+    });
+  } catch (e: any) {
+    toast.error(
+      e.response?.data?.message || "Error in retrieving user details data"
+    );
+    yield put({ type: actionTypes.GET_USER_DETAILS_FAIL });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
   yield takeLatest(actionTypes.LOGIN_LISTEN, loginUser);
   yield takeLatest(actionTypes.REGISTER_USER, registerUserSaga);
+  yield takeLatest(actionTypes.GET_USER_DETAILS, getUserDetailsSaga);
 }

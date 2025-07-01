@@ -10,6 +10,9 @@ export const actionTypes = {
   GET_ALL_TV_SERIES: "GET_ALL_TV_SERIES",
   GET_TV_SERIES_SUCCESS: "GET_TV_SERIES_SUCCESS",
   GET_TV_SERIES_FAIL: "GET_TV_SERIES_FAIL",
+  GET_USER_DETAILS: "GET_USER_DETAILS",
+  GET_USER_DETAILS_SUCCESS: "GET_USER_DETAILS_SUCCESS",
+  GET_USER_DETAILS_FAIL: "GET_USER_DETAILS_FAIL",
 };
 
 export interface registerDataType {
@@ -58,3 +61,10 @@ export const registerUser = (payload: registerDataType) => {
     payload,
   };
 };
+
+export const getUserDetails = (userId: string) => {
+  return {
+    type: actionTypes.GET_USER_DETAILS,
+    userId,
+  };
+}
