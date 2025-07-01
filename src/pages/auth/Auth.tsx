@@ -90,7 +90,7 @@ const Auth = () => {
                     id="loginEmail"
                     type="email"
                     placeholder="john@example.com"
-                    className="w-full px-4 py-2 rounded-xl bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="w-full px-4 py-2 rounded-xl bg-gray-800 text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     invalid={!!errors.loginEmail}
                     {...field}
                   />
@@ -117,7 +117,7 @@ const Auth = () => {
                     <Input
                       id="password"
                       type={showPassword ? "text" : "password"}
-                      className="w-full px-4 py-2 rounded-xl bg-gray-800 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-4 py-2 rounded-xl bg-gray-800 text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       invalid={!!errors.password}
                       {...field}
                     />
