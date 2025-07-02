@@ -4,6 +4,7 @@ import { actionTypes } from "./actions";
 const initialState = {
   moviesList: null,
   tvSeriesList: null,
+  userDetails: null,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -27,6 +28,16 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         tvSeriesList: null,
+      };
+    case actionTypes.GET_USER_DETAILS_SUCCESS:
+      return {
+        ...state,
+        userDetails: action.data,
+      };
+    case actionTypes.GET_USER_DETAILS_FAIL:
+      return {
+        ...state,
+        userDetails: null,
       };
     default:
       return state;
