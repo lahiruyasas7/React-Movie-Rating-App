@@ -46,7 +46,7 @@ export function* loginUser(action: any) {
 
     yield API.post(`auth/login`, data).then((res) => {
       window.localStorage.setItem(USER_ITEM, JSON.stringify(res?.data));
-      //location.replace("/");
+      location.replace("/");
     });
     toast.success("User Login Success");
     yield put({
@@ -91,9 +91,9 @@ export function* registerUserSaga(action: {
   }
 }
 
-export function* getUserDetailsSaga(action: { type: string; id: string }) {
+export function* getUserDetailsSaga(action: { type: string; userId: string }) {
   try {
-    const { data } = yield API.get(`auth/${action.id}`);
+    const { data } = yield API.get(`auth/${action.userId}`);
     yield put({
       type: actionTypes.GET_USER_DETAILS_SUCCESS,
       data: data,
