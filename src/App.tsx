@@ -10,6 +10,7 @@ import TvSeries from "./pages/tv-series/TvSeries";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Page404 from "./pages/page404/Page404";
 import UserProfile from "./pages/user-profile/UserProfile";
+import GoogleSuccess from "./pages/auth/GoogleSuccess";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/google-success" element={<GoogleSuccess />} />
         </Routes>
         <Footer />
       </Router>
