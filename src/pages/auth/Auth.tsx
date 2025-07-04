@@ -64,6 +64,10 @@ const Auth = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = `${import.meta.env.VITE_API_URL}auth/google`;
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-tr from-zinc-900 via-gray-900 to-black px-4">
       <div className="w-full max-w-xl bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-2xl">
@@ -136,6 +140,19 @@ const Auth = () => {
                 </>
               )}
             />
+          </div>
+
+          <div className="flex justify-center items-center gap-2 mb-1">
+            <div className="text-sm text-center text-indigo-400 mb-1">
+              Or Login with
+            </div>{" "}
+            <button onClick={handleGoogleLogin}>
+              <img
+                src="custom-images/google-logo.png"
+                alt="Google"
+                style={{ width: 20 }}
+              />
+            </button>
           </div>
 
           <div className="text-sm text-center text-indigo-400 mb-6">
