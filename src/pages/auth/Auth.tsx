@@ -146,7 +146,7 @@ const Auth = () => {
             <div className="text-sm text-center text-indigo-400 mb-1">
               Or Login with
             </div>{" "}
-            <button onClick={handleGoogleLogin}>
+            <button onClick={handleGoogleLogin} type="button">
               <img
                 src="custom-images/google-logo.png"
                 alt="Google"
