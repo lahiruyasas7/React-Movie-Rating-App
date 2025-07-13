@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useParams,
+} from "react-router-dom";
 import Navbar from "./components/navbar";
 import Auth from "./pages/auth/Auth";
 import Home from "./pages/home/Home";
@@ -11,6 +16,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Page404 from "./pages/page404/Page404";
 import UserProfile from "./pages/user-profile/UserProfile";
 import GoogleSuccess from "./pages/auth/GoogleSuccess";
+import ChatPage from "./pages/chat/Chat";
+import ChatListPage from "./pages/chat/ChatListpage";
 
 function App() {
   return (
@@ -54,6 +61,8 @@ function App() {
             }
           />
           <Route path="/google-success" element={<GoogleSuccess />} />
+          <Route path="/chat-list-page" element={<ChatListPage />} />
+          <Route path="/chat/:targetUserId" element={<ChatPageWrapper />} />
         </Routes>
         <Footer />
       </Router>
@@ -62,3 +71,8 @@ function App() {
 }
 
 export default App;
+
+function ChatPageWrapper() {
+  const { targetUserId } = useParams();
+  return <>{targetUserId && <ChatPage targetUserId={targetUserId} />}</>;
+}
