@@ -3,6 +3,7 @@ import { Film, LogIn, Tv } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { Button, Nav, NavItem, NavLink } from "reactstrap";
 import Swal from "sweetalert2";
+import Avatar from "react-avatar";
 
 const Navbar = () => {
   interface UserData {
@@ -19,7 +20,6 @@ const Navbar = () => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     setUserData(user);
   }, []);
-  console.log("userData", userData);
 
   const logoutHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -48,61 +48,71 @@ const Navbar = () => {
   };
 
   return (
-    <Nav className="flex space-x-4 md:space-x-6 text-white font-medium text-sm md:text-base">
-      <NavItem>
-        <NavLink
-          href="/"
-          className="hover:text-[#facc15] text-white transition-colors duration-300"
-        >
-          <Film className="inline-block w-4 h-4 mr-1" /> Home
-        </NavLink>
-      </NavItem>
-
-      <NavItem>
-        <NavLink
-          href="/movies"
-          className="hover:text-[#facc15] text-white transition-colors duration-300"
-        >
-          <Film className="inline-block w-4 h-4 mr-1" /> Movies
-        </NavLink>
-      </NavItem>
-
-      <NavItem>
-        <NavLink
-          href="/tv-series"
-          className="hover:text-[#facc15] text-white transition-colors duration-300"
-        >
-          <Tv className="inline-block w-4 h-4 mr-1" /> TV Shows
-        </NavLink>
-      </NavItem>
-
-      <NavItem>
-        <NavLink
-          href="/trending"
-          className="hover:text-[#facc15] text-white transition-colors duration-300"
-        >
-          🔥 Trending
-        </NavLink>
-      </NavItem>
-
-      {!userData?.accessToken ? (
+    <div className="flex items-center justify-between">
+      <Nav className="flex space-x-4 md:space-x-6 text-white font-medium text-sm md:text-base">
         <NavItem>
           <NavLink
-            href="/auth"
-            className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
+            href="/"
+            className="hover:text-[#facc15] text-white transition-colors duration-300"
           >
-            <LogIn className="inline-block w-4 h-4 mr-1" /> Login
+            <Film className="inline-block w-4 h-4 mr-1" /> Home
           </NavLink>
         </NavItem>
-      ) : (
-        <Button
-          onClick={logoutHandler}
-          className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
-        >
-          <LogIn className="inline-block w-4 h-4 mr-1" /> Log Out
-        </Button>
-      )}
-    </Nav>
+
+        <NavItem>
+          <NavLink
+            href="/movies"
+            className="hover:text-[#facc15] text-white transition-colors duration-300"
+          >
+            <Film className="inline-block w-4 h-4 mr-1" /> Movies
+          </NavLink>
+        </NavItem>
+
+        <NavItem>
+          <NavLink
+            href="/tv-series"
+            className="hover:text-[#facc15] text-white transition-colors duration-300"
+          >
+            <Tv className="inline-block w-4 h-4 mr-1" /> TV Shows
+          </NavLink>
+        </NavItem>
+
+        <NavItem>
+          <NavLink
+            href="/trending"
+            className="hover:text-[#facc15] text-white transition-colors duration-300"
+          >
+            🔥 Trending
+          </NavLink>
+        </NavItem>
+
+        {!userData?.accessToken ? (
+          <NavItem>
+            <NavLink
+              href="/auth"
+              className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
+            >
+              <LogIn className="inline-block w-4 h-4 mr-1" /> Login
+            </NavLink>
+          </NavItem>
+        ) : (
+          <Button
+            onClick={logoutHandler}
+            className="bg-[#facc15] text-white px-3 rounded hover:bg-yellow-300 transition-all duration-300"
+          >
+            <LogIn className="inline-block w-4 h-4 mr-1" /> Log Out
+          </Button>
+        )}
+      </Nav>
+      <NavLink href="/user-profile">
+        <Avatar
+          name="Foo Bar"
+          size="40"
+          round={true}
+          className="cursor-pointer"
+        />
+      </NavLink>
+    </div>
   );
 };
 
