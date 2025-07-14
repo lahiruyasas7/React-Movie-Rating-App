@@ -3,15 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 
-const user = JSON.parse(localStorage.getItem("user") || "{}");
-const socket = io("http://localhost:3003", {
-  query: {
-    userId: user.user.userId, 
-  },
-});
-
 export default function ChatPage({ targetUserId }: { targetUserId: string }) {
-//   const userId = localStorage.getItem("userId");
+  //   const userId = localStorage.getItem("userId");
   type Message = {
     id: string;
     senderId: string;
@@ -23,7 +16,14 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [content, setContent] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
-  console.log('messages', messages);
+  console.log("messages", messages);
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const socket = io("http://localhost:3003", {
+    query: {
+      userId: user.user.userId,
+    },
+  });
   useEffect(() => {
     // Load previous messages
     axios
@@ -84,7 +84,8 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
             <span
               style={{
                 display: "inline-block",
-                background: msg.senderId === user.user.userId ? "#daf8cb" : "#f1f1f1",
+                background:
+                  msg.senderId === user.user.userId ? "#daf8cb" : "#f1f1f1",
                 padding: "6px 10px",
                 borderRadius: 8,
               }}
