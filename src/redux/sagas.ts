@@ -106,10 +106,29 @@ export function* getUserDetailsSaga(action: { type: string; userId: string }) {
   }
 }
 
+export function* updateUserDetailsSaga({
+  userId,
+  payload,
+}: any): Generator<any, void, any> {
+  try {
+    const response = yield API.patch(`/auth/update/${userId}`, payload, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    if (response.status === 200) {
+      toast.success("User profile updated successfully");
+    }
+  } catch (e: any) {
+    toast.error(e.response?.data?.message || "Error in updating User Details");
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
   yield takeLatest(actionTypes.LOGIN_LISTEN, loginUser);
   yield takeLatest(actionTypes.REGISTER_USER, registerUserSaga);
   yield takeLatest(actionTypes.GET_USER_DETAILS, getUserDetailsSaga);
+  yield takeLatest(actionTypes.UPDATE_USER_DETAILS, updateUserDetailsSaga);
 }

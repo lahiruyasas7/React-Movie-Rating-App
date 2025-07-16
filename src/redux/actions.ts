@@ -13,6 +13,7 @@ export const actionTypes = {
   GET_USER_DETAILS: "GET_USER_DETAILS",
   GET_USER_DETAILS_SUCCESS: "GET_USER_DETAILS_SUCCESS",
   GET_USER_DETAILS_FAIL: "GET_USER_DETAILS_FAIL",
+  UPDATE_USER_DETAILS: "UPDATE_USER_DETAILS",
 };
 
 export interface registerDataType {
@@ -67,4 +68,12 @@ export const getUserDetails = (userId: string) => {
     type: actionTypes.GET_USER_DETAILS,
     userId,
   };
-}
+};
+
+export const updateUserDetails = (userId: string, payload: any) => {
+  return {
+    type: actionTypes.UPDATE_USER_DETAILS,
+    userId,
+    payload,
+  };
+};

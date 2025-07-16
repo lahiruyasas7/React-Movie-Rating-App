@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails } from "../../redux/actions";
+import { getUserDetails, updateUserDetails } from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
 import { Controller, useForm } from "react-hook-form";
 import { Button, Col, Form, FormFeedback, Input, Label, Row } from "reactstrap";
@@ -24,6 +24,7 @@ interface UserProfileFormData {
   dateOfBirth?: string;
   phone?: string;
   email: string;
+  profileImage?: File | null;
 }
 
 const schema = yup
@@ -71,11 +72,13 @@ const UserProfile = () => {
       dispatch(getUserDetails(userData.user.userId));
     }
   }, [userData]);
-  console.log("userDetails", userDetails);
 
   const onSubmit = (data: UserProfileFormData) => {
-    console.log("Form Submitted:", data);
-    // dispatch(updateUserDetails(data)); // Implement this action
+    const userId = userData?.user?.userId;
+    data.profileImage = uploadedImage;
+    if (data && userId) {
+      dispatch(updateUserDetails(userId, data));
+    }
   };
 
   useEffect(() => {
