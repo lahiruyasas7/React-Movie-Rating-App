@@ -7,6 +7,7 @@ import { Button, Col, Form, FormFeedback, Input, Label, Row } from "reactstrap";
 import Avatar from "react-avatar";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { createImageObjectURL } from "../../utils/custom-ustils";
 
 interface UserData {
   accessToken: string;
@@ -36,6 +37,7 @@ const schema = yup
 
 const UserProfile = () => {
   const [userData, setUserData] = useState<UserData>();
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
   const dispatch = useDispatch();
 
@@ -88,15 +90,40 @@ const UserProfile = () => {
       });
     }
   }, [userDetails, reset]);
+
+  //post image handler
+  const profileImageHandler = (event: any) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      setUploadedImage(file);
+    }
+  };
+  console.log("uploadedImage", uploadedImage);
   return (
     <div className="flex flex-col items-center justify-center p-4 h-screen">
       <Row>
-        <Avatar
-          name="Foo Bar"
-          size="100"
-          round={true}
-          className="cursor-pointer"
+        <input
+          type="file"
+          accept=".jpg, .jpeg, .png, .gif"
+          onChange={profileImageHandler}
+          id="post-upload"
+          style={{ display: "none" }}
         />
+        <label htmlFor="post-upload" className="custom-file-upload">
+          <Avatar
+            src={
+              createImageObjectURL(uploadedImage) ??
+              (userDetails?.profileImageUrl || undefined)
+            }
+            name={`${userDetails?.firstName || ""} ${
+              userDetails?.lastName || ""
+            }`}
+            size="120"
+            round={true}
+            className="cursor-pointer"
+          />
+        </label>
       </Row>
       <Row className="w-1/2 mt-4">
         <Col className="w-full" sm="12" md="12" lg="12">
