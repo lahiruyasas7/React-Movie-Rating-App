@@ -5,6 +5,7 @@ const initialState = {
   moviesList: null,
   tvSeriesList: null,
   userDetails: null,
+  loader: false,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -38,6 +39,11 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         userDetails: null,
+      };
+    case actionTypes.LOADER_HANDLE:
+      return {
+        ...state,
+        loader: action.data,
       };
     default:
       return state;
