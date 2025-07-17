@@ -23,7 +23,7 @@ interface UserProfileFormData {
   address?: string;
   dateOfBirth?: string;
   phone?: string;
-  email: string;
+  email?: string;
   profileImage?: File | null;
 }
 
@@ -32,7 +32,13 @@ const schema = yup
   .shape({
     firstName: yup.string().required("First Name is required"),
 
-    email: yup.string().email("Invalid email").required("Email is required"),
+    //email: yup.string().email("Invalid email").required("Email is required"),
+    email: yup.string().when("$isGoogleUser", {
+      is: false,
+      then: (schema) =>
+        schema.required("Email is required").email("Invalid email"),
+      otherwise: (schema) => schema.notRequired(),
+    }),
   })
   .required();
 
@@ -61,6 +67,7 @@ const UserProfile = () => {
   } = useForm<UserProfileFormData>({
     defaultValues: defaultFormValues,
     resolver: yupResolver(schema),
+    context: { isGoogleUser: !!userDetails?.googleId },
   });
 
   useEffect(() => {
@@ -76,6 +83,7 @@ const UserProfile = () => {
   const onSubmit = (data: UserProfileFormData) => {
     const userId = userData?.user?.userId;
     data.profileImage = uploadedImage;
+    if (userDetails?.googleId) delete data.email;
     if (data && userId) {
       dispatch(updateUserDetails(userId, data));
     }
@@ -160,7 +168,10 @@ const UserProfile = () => {
               name="email"
               control={control}
               render={({ field }) => (
-                <Input {...field} disabled={userDetails?.googleId} />
+                <>
+                  <Input {...field} disabled={userDetails?.googleId} invalid={!!errors.email}/>
+                  <FormFeedback>Email cannot be blank</FormFeedback>
+                </>
               )}
             />
 
