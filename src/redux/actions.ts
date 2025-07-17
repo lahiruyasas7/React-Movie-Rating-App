@@ -14,6 +14,7 @@ export const actionTypes = {
   GET_USER_DETAILS_SUCCESS: "GET_USER_DETAILS_SUCCESS",
   GET_USER_DETAILS_FAIL: "GET_USER_DETAILS_FAIL",
   UPDATE_USER_DETAILS: "UPDATE_USER_DETAILS",
+  LOADER_HANDLE: "LOADER_HANDLE",
 };
 
 export interface registerDataType {
@@ -49,7 +50,7 @@ export const loginSuccess = (data: any) => {
   };
 };
 
-export const handleLoginLoader = (data: any) => {
+export const handleLoginLoader = (data: boolean) => {
   return {
     type: actionTypes.LOGIN_LOADER_HANDLE,
     data,
@@ -75,5 +76,12 @@ export const updateUserDetails = (userId: string, payload: any) => {
     type: actionTypes.UPDATE_USER_DETAILS,
     userId,
     payload,
+  };
+};
+
+export const handleLoader = (data: boolean) => {
+  return {
+    type: actionTypes.LOADER_HANDLE,
+    data,
   };
 };
