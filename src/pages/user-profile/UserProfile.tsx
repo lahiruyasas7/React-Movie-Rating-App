@@ -63,7 +63,7 @@ const UserProfile = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isDirty }, // <-- add isDirty here
   } = useForm<UserProfileFormData>({
     defaultValues: defaultFormValues,
     resolver: yupResolver(schema),
@@ -169,7 +169,11 @@ const UserProfile = () => {
               control={control}
               render={({ field }) => (
                 <>
-                  <Input {...field} disabled={userDetails?.googleId} invalid={!!errors.email}/>
+                  <Input
+                    {...field}
+                    disabled={userDetails?.googleId}
+                    invalid={!!errors.email}
+                  />
                   <FormFeedback>Email cannot be blank</FormFeedback>
                 </>
               )}
@@ -196,7 +200,7 @@ const UserProfile = () => {
               render={({ field }) => <Input type="date" {...field} />}
             />
 
-            <Button className="mt-4" type="submit">
+            <Button className="mt-4" type="submit" disabled={!isDirty}>
               Update Profile
             </Button>
           </Form>
