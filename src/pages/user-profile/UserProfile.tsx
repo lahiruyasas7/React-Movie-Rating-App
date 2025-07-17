@@ -52,7 +52,7 @@ const UserProfile = () => {
     dateOfBirth: userDetails?.dateOfBirth || "",
     email: userDetails?.email || "",
   });
-
+  console.log("userDetails", userDetails);
   const {
     control,
     handleSubmit,
@@ -113,7 +113,12 @@ const UserProfile = () => {
           id="post-upload"
           style={{ display: "none" }}
         />
-        <label htmlFor="post-upload" className="custom-file-upload">
+        <label
+          htmlFor="post-upload"
+          className={`custom-file-upload${
+            userDetails?.googleId ? " pointer-events-none " : ""
+          }`}
+        >
           <Avatar
             src={
               createImageObjectURL(uploadedImage) ??
@@ -154,7 +159,9 @@ const UserProfile = () => {
             <Controller
               name="email"
               control={control}
-              render={({ field }) => <Input {...field} />}
+              render={({ field }) => (
+                <Input {...field} disabled={userDetails?.googleId} />
+              )}
             />
 
             <Label className="text-white">Phone</Label>
