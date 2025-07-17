@@ -1,8 +1,8 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
-import { actionTypes, registerDataType } from "./actions";
+import { actionTypes, handleLoader, registerDataType } from "./actions";
 import { API } from "../utils/axios";
-import { fireAlertError } from "../utils/customUtil";
+import { fireAlertError, jsonToFormData } from "../utils/customUtil";
 import { USER_ITEM } from "../utils/constants";
 import { toast } from "react-toastify";
 
@@ -111,15 +111,22 @@ export function* updateUserDetailsSaga({
   payload,
 }: any): Generator<any, void, any> {
   try {
-    const response = yield API.patch(`/auth/update/${userId}`, payload, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    yield put(handleLoader(true));
+    const response = yield API.patch(
+      `/auth/update/${userId}`,
+      jsonToFormData(payload),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
     if (response.status === 200) {
+      yield put(handleLoader(false));
       toast.success("User profile updated successfully");
     }
   } catch (e: any) {
+    yield put(handleLoader(false));
     toast.error(e.response?.data?.message || "Error in updating User Details");
   }
 }
