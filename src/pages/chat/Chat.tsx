@@ -42,6 +42,8 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
 
     // Listen for real-time messages
     socket.on("receive_message", (msg: any) => {
+
+      if (msg.senderId === user.user.userId) return;
       const isFromOrTo = [msg.senderId, msg.receiverId].includes(targetUserId);
       if (isFromOrTo) {
         setMessages((prev) => [...prev, msg]);
