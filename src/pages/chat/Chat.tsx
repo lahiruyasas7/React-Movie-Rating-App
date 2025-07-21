@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
 import type { Socket } from "socket.io-client";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllMessages } from "../../redux/actions";
+import { RootState } from "../../redux/reducers";
 
 export default function ChatPage({ targetUserId }: { targetUserId: string }) {
   //   const userId = localStorage.getItem("userId");
@@ -21,9 +24,13 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
+  const { allMessages } = useSelector((state: RootState) => state.reducer);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // Initialize socket connection
-    socketRef.current = io("http://localhost:3003", {
+    socketRef.current = io(import.meta.env.VITE_API_URL, {
       query: {
         userId: user.user.userId,
       },
@@ -32,17 +39,19 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
     const socket = socketRef.current;
 
     // Load chat history
-    axios
-      .get(
-        `http://localhost:3003/chat/messages?user1=${user.user.userId}&user2=${targetUserId}`
-      )
-      .then((res) => {
-        setMessages(res.data);
-      });
+    // axios
+    //   .get(
+    //     `http://localhost:3003/chat/messages?user1=${user.user.userId}&user2=${targetUserId}`
+    //   )
+    //   .then((res) => {
+    //     setMessages(res.data);
+    //   });
+    if (user?.user?.userId && targetUserId) {
+      dispatch(getAllMessages(user.user.userId, targetUserId));
+    }
 
     // Listen for real-time messages
     socket.on("receive_message", (msg: any) => {
-
       if (msg.senderId === user.user.userId) return;
       const isFromOrTo = [msg.senderId, msg.receiverId].includes(targetUserId);
       if (isFromOrTo) {
@@ -54,6 +63,12 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
       socket.disconnect();
     };
   }, [targetUserId]);
+
+  useEffect(() => {
+    if (allMessages) {
+      setMessages(allMessages);
+    }
+  }, [allMessages]);
 
   const sendMessage = () => {
     if (!content.trim()) return;
