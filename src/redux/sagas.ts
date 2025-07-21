@@ -1,8 +1,8 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
-import { actionTypes, registerDataType } from "./actions";
+import { actionTypes, handleLoader, registerDataType } from "./actions";
 import { API } from "../utils/axios";
-import { fireAlertError } from "../utils/customUtil";
+import { fireAlertError, jsonToFormData } from "../utils/customUtil";
 import { USER_ITEM } from "../utils/constants";
 import { toast } from "react-toastify";
 
@@ -106,10 +106,36 @@ export function* getUserDetailsSaga(action: { type: string; userId: string }) {
   }
 }
 
+export function* updateUserDetailsSaga({
+  userId,
+  payload,
+}: any): Generator<any, void, any> {
+  try {
+    yield put(handleLoader(true));
+    const response = yield API.patch(
+      `/auth/update/${userId}`,
+      jsonToFormData(payload),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 200) {
+      yield put(handleLoader(false));
+      toast.success("User profile updated successfully");
+    }
+  } catch (e: any) {
+    yield put(handleLoader(false));
+    toast.error(e.response?.data?.message || "Error in updating User Details");
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
   yield takeLatest(actionTypes.LOGIN_LISTEN, loginUser);
   yield takeLatest(actionTypes.REGISTER_USER, registerUserSaga);
   yield takeLatest(actionTypes.GET_USER_DETAILS, getUserDetailsSaga);
+  yield takeLatest(actionTypes.UPDATE_USER_DETAILS, updateUserDetailsSaga);
 }

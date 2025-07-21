@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Button, Nav, NavItem, NavLink } from "reactstrap";
 import Swal from "sweetalert2";
 import Avatar from "react-avatar";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux/reducers";
+import { getUserDetails } from "../redux/actions";
 
 const Navbar = () => {
   interface UserData {
@@ -15,11 +18,19 @@ const Navbar = () => {
   }
   const [userData, setUserData] = useState<UserData>();
 
+  const { userDetails } = useSelector((state: RootState) => state.reducer);
+
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     setUserData(user);
   }, []);
+
+  useEffect(() => {
+    if (userData?.user?.userId) dispatch(getUserDetails(userData.user.userId));
+  }, [userData]);
 
   const logoutHandler = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -104,14 +115,19 @@ const Navbar = () => {
           </Button>
         )}
       </Nav>
-      <NavLink href="/user-profile">
-        <Avatar
-          name="Foo Bar"
-          size="40"
-          round={true}
-          className="cursor-pointer"
-        />
-      </NavLink>
+      {userData?.user?.userId && (
+        <NavLink href="/user-profile">
+          <Avatar
+            src={userDetails?.profileImageUrl || undefined}
+            name={`${userDetails?.firstName || ""} ${
+              userDetails?.lastName || ""
+            }`}
+            size="40"
+            round={true}
+            className="cursor-pointer"
+          />
+        </NavLink>
+      )}
     </div>
   );
 };

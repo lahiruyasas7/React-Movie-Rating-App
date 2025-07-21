@@ -18,10 +18,16 @@ import UserProfile from "./pages/user-profile/UserProfile";
 import GoogleSuccess from "./pages/auth/GoogleSuccess";
 import ChatPage from "./pages/chat/Chat";
 import ChatListPage from "./pages/chat/ChatListpage";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/reducers";
+import LoaderOverlay from "./components/CustomLoader";
 
 function App() {
+
+  const loader = useSelector((state: RootState) => state.reducer.loader);
   return (
     <div>
+      {loader && <LoaderOverlay/>}
       <Router>
         <Navbar />
         <Routes>
