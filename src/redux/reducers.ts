@@ -1,11 +1,12 @@
 import { combineReducers } from "redux";
-import { actionTypes } from "./actions";
+import { actionTypes, getAllMessages } from "./actions";
 
 const initialState = {
   moviesList: null,
   tvSeriesList: null,
   userDetails: null,
   loader: false,
+  allMessages: null,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -44,6 +45,17 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         loader: action.data,
+      };
+
+    case actionTypes.GET_ALL_MESSAGES_SUCCESS:
+      return {
+        ...state,
+        allMessages: action.data,
+      };
+    case actionTypes.GET_ALL_MESSAGES_FAIL:
+      return {
+        ...state,
+        allMessages: null,
       };
     default:
       return state;

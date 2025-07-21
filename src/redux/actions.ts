@@ -15,6 +15,9 @@ export const actionTypes = {
   GET_USER_DETAILS_FAIL: "GET_USER_DETAILS_FAIL",
   UPDATE_USER_DETAILS: "UPDATE_USER_DETAILS",
   LOADER_HANDLE: "LOADER_HANDLE",
+  GET_ALL_MESSAGES: "GET_ALL_MESSAGES",
+  GET_ALL_MESSAGES_SUCCESS: "GET_ALL_MESSAGES_SUCCESS",
+  GET_ALL_MESSAGES_FAIL: "GET_ALL_MESSAGES_FAIL",
 };
 
 export interface registerDataType {
@@ -85,3 +88,11 @@ export const handleLoader = (data: boolean) => {
     data,
   };
 };
+
+export const getAllMessages = (userId: string, targetUserId: string) => {
+  return {
+    type: actionTypes.GET_ALL_MESSAGES,
+    userId,
+    targetUserId
+  };
+}
