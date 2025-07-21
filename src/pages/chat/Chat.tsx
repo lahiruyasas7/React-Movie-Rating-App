@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { io } from "socket.io-client";
 import axios from "axios";
+import type { Socket } from "socket.io-client";
 
 export default function ChatPage({ targetUserId }: { targetUserId: string }) {
   //   const userId = localStorage.getItem("userId");
@@ -10,22 +11,27 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
     senderId: string;
     receiverId: string;
     content: string;
-    // add other fields if needed
   };
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [content, setContent] = useState("");
-  const bottomRef = useRef<HTMLDivElement>(null);
-  console.log("messages", messages);
+  const bottomRef = useRef<HTMLDivElement | null>(null);
+
+  const socketRef = useRef<Socket | null>(null);
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const socket = io("http://localhost:3003", {
-    query: {
-      userId: user.user.userId,
-    },
-  });
+
   useEffect(() => {
-    // Load previous messages
+    // Initialize socket connection
+    socketRef.current = io("http://localhost:3003", {
+      query: {
+        userId: user.user.userId,
+      },
+    });
+
+    const socket = socketRef.current;
+
+    // Load chat history
     axios
       .get(
         `http://localhost:3003/chat/messages?user1=${user.user.userId}&user2=${targetUserId}`
@@ -34,8 +40,8 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
         setMessages(res.data);
       });
 
-    // Listen for real-time incoming messages
-    socket.on("receive_message", (msg) => {
+    // Listen for real-time messages
+    socket.on("receive_message", (msg: any) => {
       const isFromOrTo = [msg.senderId, msg.receiverId].includes(targetUserId);
       if (isFromOrTo) {
         setMessages((prev) => [...prev, msg]);
@@ -43,17 +49,30 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
     });
 
     return () => {
-      socket.off("receive_message");
+      socket.disconnect();
     };
   }, [targetUserId]);
 
   const sendMessage = () => {
     if (!content.trim()) return;
 
-    socket.emit("send_message", {
+    const newMsg = {
+      id: Date.now().toString(), // Temporary ID
+      senderId: user.user.userId,
       receiverId: targetUserId,
       content,
-    });
+    };
+
+    // Emit via socket
+    if (socketRef.current) {
+      socketRef.current.emit("send_message", {
+        receiverId: targetUserId,
+        content,
+      });
+    }
+
+    // Optimistically update chat UI
+    setMessages((prev) => [...prev, newMsg]);
 
     setContent("");
   };
@@ -73,7 +92,7 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
           padding: 10,
         }}
       >
-        {messages.map((msg: any) => (
+        {messages.map((msg) => (
           <div
             key={msg.id}
             style={{
