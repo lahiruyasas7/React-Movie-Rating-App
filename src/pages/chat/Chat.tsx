@@ -18,9 +18,9 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
 
   const [messages, setMessages] = useState<Message[]>([]);
   const [content, setContent] = useState("");
-  const bottomRef = useRef<HTMLDivElement | null>(null);
+  const bottomRef = useRef<HTMLDivElement | null>(null); //A ref to scroll to bottom when new messages arrive
 
-  const socketRef = useRef<Socket | null>(null);
+  const socketRef = useRef<Socket | null>(null); //Keeps socket instance persistent without recreating on each render
 
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
@@ -38,14 +38,6 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
 
     const socket = socketRef.current;
 
-    // Load chat history
-    // axios
-    //   .get(
-    //     `http://localhost:3003/chat/messages?user1=${user.user.userId}&user2=${targetUserId}`
-    //   )
-    //   .then((res) => {
-    //     setMessages(res.data);
-    //   });
     if (user?.user?.userId && targetUserId) {
       dispatch(getAllMessages(user.user.userId, targetUserId));
     }
