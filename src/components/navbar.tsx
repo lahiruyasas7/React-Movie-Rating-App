@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Film, LogIn, Tv } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import { Button, Nav, NavItem, NavLink } from "reactstrap";
@@ -19,6 +19,8 @@ const Navbar = () => {
   const [userData, setUserData] = useState<UserData>();
 
   const { userDetails } = useSelector((state: RootState) => state.reducer);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const dispatch = useDispatch();
 
@@ -57,6 +59,22 @@ const Navbar = () => {
       }
     });
   };
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="flex items-center justify-between">
@@ -116,17 +134,43 @@ const Navbar = () => {
         )}
       </Nav>
       {userData?.user?.userId && (
-        <NavLink href="/user-profile">
-          <Avatar
-            src={userDetails?.profileImageUrl || undefined}
-            name={`${userDetails?.firstName || ""} ${
-              userDetails?.lastName || ""
-            }`}
-            size="40"
-            round={true}
+        <div className="relative" ref={dropdownRef}>
+          <div
+            onClick={() => setShowDropdown((prev) => !prev)}
             className="cursor-pointer"
-          />
-        </NavLink>
+          >
+            <Avatar
+              src={userDetails?.profileImageUrl || undefined}
+              name={`${userDetails?.firstName || ""} ${
+                userDetails?.lastName || ""
+              }`}
+              size="40"
+              round={true}
+            />
+          </div>
+          {showDropdown && (
+            <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-md z-50 text-sm">
+              <div
+                onClick={() => {
+                  navigate("/user-profile");
+                  setShowDropdown(false);
+                }}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                My Profile
+              </div>
+              <div
+                onClick={() => {
+                  navigate("/my-videos");
+                  setShowDropdown(false);
+                }}
+                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              >
+                My Videos
+              </div>
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
