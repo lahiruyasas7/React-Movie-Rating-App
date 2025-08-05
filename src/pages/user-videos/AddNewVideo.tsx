@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Video } from "react-feather";
 import { Button } from "reactstrap";
 
@@ -13,8 +13,14 @@ const AddNewVideo = () => {
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Revoke old preview URL to prevent memory leaks and stale previews
+      if (previewURL) {
+        URL.revokeObjectURL(previewURL);
+      }
+
+      const newPreviewURL = URL.createObjectURL(file);
       setVideoFile(file);
-      setPreviewURL(URL.createObjectURL(file));
+      setPreviewURL(newPreviewURL);
     }
   };
 
@@ -46,6 +52,7 @@ const AddNewVideo = () => {
       setDescription("");
       setVideoFile(null);
       setPreviewURL(null);
+      
     } catch (error) {
       setMessage("Failed to upload video.");
     } finally {
@@ -68,15 +75,13 @@ const AddNewVideo = () => {
           />
         </div>
 
-        {/* {previewURL && (
-          <video controls className="mt-4 w-full rounded">
-            <source src={previewURL} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-        )} */}
         <div className="mt-4 w-full rounded border-2 border-dashed border-zinc-700 bg-zinc-800 flex items-center justify-center aspect-video relative">
           {previewURL ? (
-            <video controls className="w-full h-full object-contain rounded">
+            <video
+              key={previewURL}
+              controls
+              className="w-full h-full object-contain rounded"
+            >
               <source src={previewURL} type="video/mp4" />
               Your browser does not support the video tag.
             </video>
