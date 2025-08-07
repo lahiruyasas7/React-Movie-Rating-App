@@ -131,6 +131,50 @@ export function* updateUserDetailsSaga({
   }
 }
 
+export function* getAllMessagesSaga(action: {
+  type: string;
+  userId: string;
+  targetUserId: string;
+}) {
+  try {
+    const { data } = yield API.get(
+      `chat/messages?user1=${action.userId}&user2=${action.targetUserId}`
+    );
+    yield put({
+      type: actionTypes.GET_ALL_MESSAGES_SUCCESS,
+      data: data,
+    });
+  } catch (e: any) {
+    toast.error(e.response?.data?.message || "Error in retrieving messages");
+    yield put({ type: actionTypes.GET_ALL_MESSAGES_FAIL });
+  }
+}
+
+export function* createVideoSaga({
+  userId,
+  payload,
+}: any): Generator<any, void, any> {
+  try {
+    yield put(handleLoader(true));
+    const response = yield API.post(
+      `/videos/add:${userId}`,
+      jsonToFormData(payload),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 201) {
+      yield put(handleLoader(false));
+      toast.success("Video uploaded successfully");
+    }
+  } catch (e: any) {
+    yield put(handleLoader(false));
+    toast.error(e.response?.data?.message || "Error in uploading video");
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -138,4 +182,6 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.REGISTER_USER, registerUserSaga);
   yield takeLatest(actionTypes.GET_USER_DETAILS, getUserDetailsSaga);
   yield takeLatest(actionTypes.UPDATE_USER_DETAILS, updateUserDetailsSaga);
+  yield takeLatest(actionTypes.GET_ALL_MESSAGES, getAllMessagesSaga);
+  yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
 }
