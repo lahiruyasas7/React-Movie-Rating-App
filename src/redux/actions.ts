@@ -18,6 +18,7 @@ export const actionTypes = {
   GET_ALL_MESSAGES: "GET_ALL_MESSAGES",
   GET_ALL_MESSAGES_SUCCESS: "GET_ALL_MESSAGES_SUCCESS",
   GET_ALL_MESSAGES_FAIL: "GET_ALL_MESSAGES_FAIL",
+  CREATE_VIDEO: "CREATE_VIDEO",
 };
 
 export interface registerDataType {
@@ -28,6 +29,12 @@ export interface registerDataType {
   address?: string;
   dateOfBirth?: string;
   password?: string;
+}
+
+export interface createVideoType {
+  name: string;
+  description: string;
+  video: File;
 }
 
 export function getAllMovies() {
@@ -93,6 +100,14 @@ export const getAllMessages = (userId: string, targetUserId: string) => {
   return {
     type: actionTypes.GET_ALL_MESSAGES,
     userId,
-    targetUserId
+    targetUserId,
   };
-}
+};
+
+export const createVideo = (payload: createVideoType, userId: string) => {
+  return {
+    type: actionTypes.CREATE_VIDEO,
+    payload,
+    userId,
+  };
+};
