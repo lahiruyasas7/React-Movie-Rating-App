@@ -157,7 +157,7 @@ export function* createVideoSaga({
   try {
     yield put(handleLoader(true));
     const response = yield API.post(
-      `/videos/add:${userId}`,
+      `/videos/add/${userId}`,
       jsonToFormData(payload),
       {
         headers: {
