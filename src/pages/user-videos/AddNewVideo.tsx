@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Video } from "react-feather";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
+import { createVideo } from "../../redux/actions";
+import { RootState } from "../../redux/reducers";
 
 const AddNewVideo = () => {
   const [name, setName] = useState("");
@@ -9,6 +12,10 @@ const AddNewVideo = () => {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const { userDetails } = useSelector((state: RootState) => state.reducer);
+ 
+  const dispatch = useDispatch();
 
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -31,28 +38,24 @@ const AddNewVideo = () => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("name", name);
-    formData.append("description", description);
-    formData.append("video", videoFile);
-
     setLoading(true);
     setMessage("");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/videos`, {
-        method: "POST",
-        body: formData,
-      });
+      const payload = {
+        name,
+        description,
+        video: videoFile,
+      };
 
-      if (!res.ok) throw new Error("Upload failed");
+      if (payload && userDetails?.userId) {
+        dispatch(createVideo(payload, userDetails.userId));
+      }
 
-      setMessage("Video uploaded successfully!");
       setName("");
       setDescription("");
       setVideoFile(null);
       setPreviewURL(null);
-      
     } catch (error) {
       setMessage("Failed to upload video.");
     } finally {
