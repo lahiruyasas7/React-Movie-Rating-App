@@ -22,6 +22,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducers";
 import LoaderOverlay from "./components/CustomLoader";
 import UserVideos from "./pages/user-videos/UserVideos";
+import AddNewVideo from "./pages/user-videos/AddNewVideo";
 
 function App() {
 
@@ -64,6 +65,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <UserVideos />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/add-new-video"
+            element={
+              <ProtectedRoute>
+                <AddNewVideo />
               </ProtectedRoute>
             }
           />
