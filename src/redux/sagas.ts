@@ -150,6 +150,31 @@ export function* getAllMessagesSaga(action: {
   }
 }
 
+export function* createVideoSaga({
+  userId,
+  payload,
+}: any): Generator<any, void, any> {
+  try {
+    yield put(handleLoader(true));
+    const response = yield API.post(
+      `/videos/add:${userId}`,
+      jsonToFormData(payload),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 201) {
+      yield put(handleLoader(false));
+      toast.success("Video uploaded successfully");
+    }
+  } catch (e: any) {
+    yield put(handleLoader(false));
+    toast.error(e.response?.data?.message || "Error in uploading video");
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -158,4 +183,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_USER_DETAILS, getUserDetailsSaga);
   yield takeLatest(actionTypes.UPDATE_USER_DETAILS, updateUserDetailsSaga);
   yield takeLatest(actionTypes.GET_ALL_MESSAGES, getAllMessagesSaga);
+  yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
 }
