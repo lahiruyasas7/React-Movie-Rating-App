@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Video } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { createVideo } from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
+import { useSearchParams } from "react-router-dom";
+import { getOneVideoByVideoId } from "../../redux/actions";
 
 const AddNewVideo = () => {
   const [name, setName] = useState("");
@@ -12,11 +14,24 @@ const AddNewVideo = () => {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const { userDetails } = useSelector((state: RootState) => state.reducer);
- 
+  const { userDetails, oneVideo } = useSelector((state: RootState) => state.reducer);
+
+  const [searchParams] = useSearchParams();
+
+  const videoId = searchParams.get("videoId");
+  console.log("add video id", videoId);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (videoId) {
+      dispatch(getOneVideoByVideoId(videoId));
+      setIsUpdating(true);
+    }
+  }, [videoId]);
+  console.log("isUpdating", isUpdating);
+  console.log("oneVideo", oneVideo);
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
