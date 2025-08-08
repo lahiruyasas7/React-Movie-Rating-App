@@ -8,6 +8,7 @@ const initialState = {
   loader: false,
   allMessages: null,
   userVideos: null,
+  oneVideo: null,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -67,6 +68,16 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         userVideos: null,
+      };
+    case actionTypes.GET_ONE_VIDEO_BY_ID_SUCCESS:
+      return {
+        ...state,
+        oneVideo: action.data,
+      };
+    case actionTypes.GET_ONE_VIDEO_BY_ID_FAIL:
+      return {
+        ...state,
+        oneVideo: null,
       };
     default:
       return state;

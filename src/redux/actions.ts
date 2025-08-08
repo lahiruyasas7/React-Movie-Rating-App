@@ -23,6 +23,9 @@ export const actionTypes = {
   GET_USER_VIDEOS_SUCCESS: "GET_USER_VIDEOS_SUCCESS",
   GET_USER_VIDEOS_FAIL: "GET_USER_VIDEOS_FAIL",
   UPDATE_VIDEO: "UPDATE_VIDEO",
+  GET_ONE_VIDEO_BY_ID: "GET_ONE_VIDEO_BY_ID",
+  GET_ONE_VIDEO_BY_ID_SUCCESS: "GET_ONE_VIDEO_BY_ID_SUCCESS",
+  GET_ONE_VIDEO_BY_ID_FAIL: "GET_ONE_VIDEO_BY_ID_FAIL",
 };
 
 export interface registerDataType {
@@ -129,4 +132,11 @@ export const updateVideo = (videoId: string, payload: any) => {
     videoId,
     payload,
   };
-}
+};
+
+export const getOneVideoByVideoId = (videoId: string) => {
+  return {
+    type: actionTypes.GET_ONE_VIDEO_BY_ID,
+    videoId,
+  };
+};

@@ -215,6 +215,24 @@ export function* updateVideoSaga({
   }
 }
 
+export function* getOneVideoByVideoIdSaga(action: {
+  type: string;
+  videoId: string;
+}) {
+  try {
+    const { data } = yield API.get(`videos/one-video/${action.videoId}`);
+    yield put({
+      type: actionTypes.GET_ONE_VIDEO_BY_ID_SUCCESS,
+      data: data,
+    });
+  } catch (e: any) {
+    toast.error(
+      e.response?.data?.message || "Error in retrieving Video by ID data"
+    );
+    yield put({ type: actionTypes.GET_ONE_VIDEO_BY_ID_FAIL });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -226,4 +244,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
   yield takeLatest(actionTypes.GET_USER_VIDEOS, getUserVideosSaga);
   yield takeLatest(actionTypes.UPDATE_VIDEO, updateVideoSaga);
+  yield takeLatest(actionTypes.GET_ONE_VIDEO_BY_ID, getOneVideoByVideoIdSaga);
 }
