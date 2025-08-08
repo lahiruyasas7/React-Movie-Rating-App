@@ -22,6 +22,7 @@ export const actionTypes = {
   GET_USER_VIDEOS: "GET_USER_VIDEOS",
   GET_USER_VIDEOS_SUCCESS: "GET_USER_VIDEOS_SUCCESS",
   GET_USER_VIDEOS_FAIL: "GET_USER_VIDEOS_FAIL",
+  UPDATE_VIDEO: "UPDATE_VIDEO",
 };
 
 export interface registerDataType {
@@ -121,3 +122,11 @@ export const getVideosByUserId = (userId: string) => {
     userId,
   };
 };
+
+export const updateVideo = (videoId: string, payload: any) => {
+  return {
+    type: actionTypes.UPDATE_VIDEO,
+    videoId,
+    payload,
+  };
+}

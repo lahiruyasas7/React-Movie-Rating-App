@@ -190,6 +190,31 @@ export function* getUserVideosSaga(action: { type: string; userId: string }) {
   }
 }
 
+export function* updateVideoSaga({
+  videoId,
+  payload,
+}: any): Generator<any, void, any> {
+  try {
+    yield put(handleLoader(true));
+    const response = yield API.put(
+      `/videos/update/${videoId}`,
+      jsonToFormData(payload),
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    if (response.status === 200) {
+      yield put(handleLoader(false));
+      toast.success("Video updated successfully");
+    }
+  } catch (e: any) {
+    yield put(handleLoader(false));
+    toast.error(e.response?.data?.message || "Error in updating Video data");
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -200,4 +225,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MESSAGES, getAllMessagesSaga);
   yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
   yield takeLatest(actionTypes.GET_USER_VIDEOS, getUserVideosSaga);
+  yield takeLatest(actionTypes.UPDATE_VIDEO, updateVideoSaga);
 }
