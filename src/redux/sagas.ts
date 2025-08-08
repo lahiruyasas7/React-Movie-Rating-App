@@ -175,6 +175,21 @@ export function* createVideoSaga({
   }
 }
 
+export function* getUserVideosSaga(action: { type: string; userId: string }) {
+  try {
+    const { data } = yield API.get(`videos/by-userId/${action.userId}`);
+    yield put({
+      type: actionTypes.GET_USER_VIDEOS_SUCCESS,
+      data: data,
+    });
+  } catch (e: any) {
+    toast.error(
+      e.response?.data?.message || "Error in retrieving user Videos data"
+    );
+    yield put({ type: actionTypes.GET_USER_VIDEOS_FAIL });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -184,4 +199,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.UPDATE_USER_DETAILS, updateUserDetailsSaga);
   yield takeLatest(actionTypes.GET_ALL_MESSAGES, getAllMessagesSaga);
   yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
+  yield takeLatest(actionTypes.GET_USER_VIDEOS, getUserVideosSaga);
 }

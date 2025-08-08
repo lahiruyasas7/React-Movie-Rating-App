@@ -19,6 +19,9 @@ export const actionTypes = {
   GET_ALL_MESSAGES_SUCCESS: "GET_ALL_MESSAGES_SUCCESS",
   GET_ALL_MESSAGES_FAIL: "GET_ALL_MESSAGES_FAIL",
   CREATE_VIDEO: "CREATE_VIDEO",
+  GET_USER_VIDEOS: "GET_USER_VIDEOS",
+  GET_USER_VIDEOS_SUCCESS: "GET_USER_VIDEOS_SUCCESS",
+  GET_USER_VIDEOS_FAIL: "GET_USER_VIDEOS_FAIL",
 };
 
 export interface registerDataType {
@@ -108,6 +111,13 @@ export const createVideo = (payload: createVideoType, userId: string) => {
   return {
     type: actionTypes.CREATE_VIDEO,
     payload,
+    userId,
+  };
+};
+
+export const getVideosByUserId = (userId: string) => {
+  return {
+    type: actionTypes.GET_USER_VIDEOS,
     userId,
   };
 };
