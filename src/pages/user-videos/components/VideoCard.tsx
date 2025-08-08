@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export interface Video {
   id: string;
@@ -11,6 +12,7 @@ export interface Video {
 }
 
 function VideoCard({ video }: { video: Video }) {
+  const navigate = useNavigate();
   return (
     <div
       key={video.id}
@@ -41,7 +43,7 @@ function VideoCard({ video }: { video: Video }) {
         </button>
         <button
           className="text-sm px-3 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition"
-          //onClick={() => handleEdit(video.id)}
+          onClick={() => navigate(`/add-new-video?videoId=${video?.id}`)}
         >
           Edit
         </button>
