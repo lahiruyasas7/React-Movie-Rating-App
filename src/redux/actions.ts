@@ -44,6 +44,12 @@ export interface createVideoType {
   video: File;
 }
 
+export interface updateVideoType {
+  name?: string;
+  description?: string;
+  video?: File;
+}
+
 export function getAllMovies() {
   return { type: actionTypes.GET_ALL_MOVIES };
 }
@@ -126,7 +132,7 @@ export const getVideosByUserId = (userId: string) => {
   };
 };
 
-export const updateVideo = (videoId: string, payload: any) => {
+export const updateVideo = (videoId: string, payload: updateVideoType) => {
   return {
     type: actionTypes.UPDATE_VIDEO,
     videoId,
