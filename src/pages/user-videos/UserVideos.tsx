@@ -23,7 +23,7 @@ function UserVideos() {
   }, [userDetails]);
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <Row className="mt-4">
         <Col className="flex justify-end items-center">
           <Button
