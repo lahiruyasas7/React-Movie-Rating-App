@@ -26,6 +26,7 @@ export const actionTypes = {
   GET_ONE_VIDEO_BY_ID: "GET_ONE_VIDEO_BY_ID",
   GET_ONE_VIDEO_BY_ID_SUCCESS: "GET_ONE_VIDEO_BY_ID_SUCCESS",
   GET_ONE_VIDEO_BY_ID_FAIL: "GET_ONE_VIDEO_BY_ID_FAIL",
+  DELETE_VIDEO: 'DELETE_VIDEO',
 };
 
 export interface registerDataType {
@@ -146,3 +147,10 @@ export const getOneVideoByVideoId = (videoId: string) => {
     videoId,
   };
 };
+
+export const deleteVideo = (videoId: string) => {
+  return {
+    type: actionTypes.DELETE_VIDEO,
+    videoId,
+  };
+}

@@ -233,6 +233,20 @@ export function* getOneVideoByVideoIdSaga(action: {
   }
 }
 
+export function* deleteVideoSaga({ videoId }: any): Generator<any, void, any> {
+  try {
+    yield put(handleLoader(true));
+    const response = yield API.delete(`videos/delete/${videoId}`);
+    if (response.status === 200) {
+      toast.success("Video deleted successfully");
+      yield put(handleLoader(false));
+    }
+  } catch (e: any) {
+    toast.error(e.response?.data?.message || "Error in deleting Video");
+    yield put(handleLoader(false));
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -245,4 +259,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_USER_VIDEOS, getUserVideosSaga);
   yield takeLatest(actionTypes.UPDATE_VIDEO, updateVideoSaga);
   yield takeLatest(actionTypes.GET_ONE_VIDEO_BY_ID, getOneVideoByVideoIdSaga);
+  yield takeLatest(actionTypes.DELETE_VIDEO, deleteVideoSaga);
 }
