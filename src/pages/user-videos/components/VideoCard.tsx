@@ -1,5 +1,8 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { deleteVideo } from "../../../redux/actions";
 
 export interface Video {
   id: string;
@@ -13,6 +16,33 @@ export interface Video {
 
 function VideoCard({ video }: { video: Video }) {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const deleteHandler = (event: any, data: Video) => {
+    console.log("delete");
+    event.stopPropagation();
+    Swal.fire({
+      title: "Delete Video",
+      html: `
+				<div style="display: flex; flex-direction: column; justify-content: center:">
+					<span>Are you sure you want to delete the Video</span>
+					<span style="font-weight: bold;">${data.name} <span style="font-weight: normal;">?</span></span>
+				</div>
+			`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Delete",
+      confirmButtonColor: "#198754",
+      cancelButtonColor: "rgb(220 64 64)",
+      allowOutsideClick: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log("delete");
+        dispatch(deleteVideo(data.id));
+      }
+    });
+  };
   return (
     <div
       key={video.id}
@@ -37,7 +67,7 @@ function VideoCard({ video }: { video: Video }) {
       <div className="px-4 pb-4 flex justify-between">
         <button
           className="text-sm px-3 py-1 rounded-lg bg-red-600 hover:bg-red-500 transition"
-          //onClick={() => handleDelete(video.id)}
+          onClick={(event) => deleteHandler(event, video)}
         >
           Delete
         </button>
