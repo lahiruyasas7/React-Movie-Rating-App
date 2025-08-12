@@ -19,6 +19,14 @@ export const actionTypes = {
   GET_ALL_MESSAGES_SUCCESS: "GET_ALL_MESSAGES_SUCCESS",
   GET_ALL_MESSAGES_FAIL: "GET_ALL_MESSAGES_FAIL",
   CREATE_VIDEO: "CREATE_VIDEO",
+  GET_USER_VIDEOS: "GET_USER_VIDEOS",
+  GET_USER_VIDEOS_SUCCESS: "GET_USER_VIDEOS_SUCCESS",
+  GET_USER_VIDEOS_FAIL: "GET_USER_VIDEOS_FAIL",
+  UPDATE_VIDEO: "UPDATE_VIDEO",
+  GET_ONE_VIDEO_BY_ID: "GET_ONE_VIDEO_BY_ID",
+  GET_ONE_VIDEO_BY_ID_SUCCESS: "GET_ONE_VIDEO_BY_ID_SUCCESS",
+  GET_ONE_VIDEO_BY_ID_FAIL: "GET_ONE_VIDEO_BY_ID_FAIL",
+  DELETE_VIDEO: 'DELETE_VIDEO',
 };
 
 export interface registerDataType {
@@ -35,6 +43,12 @@ export interface createVideoType {
   name: string;
   description: string;
   video: File;
+}
+
+export interface updateVideoType {
+  name?: string;
+  description?: string;
+  video?: File;
 }
 
 export function getAllMovies() {
@@ -111,3 +125,32 @@ export const createVideo = (payload: createVideoType, userId: string) => {
     userId,
   };
 };
+
+export const getVideosByUserId = (userId: string) => {
+  return {
+    type: actionTypes.GET_USER_VIDEOS,
+    userId,
+  };
+};
+
+export const updateVideo = (videoId: string, payload: updateVideoType) => {
+  return {
+    type: actionTypes.UPDATE_VIDEO,
+    videoId,
+    payload,
+  };
+};
+
+export const getOneVideoByVideoId = (videoId: string) => {
+  return {
+    type: actionTypes.GET_ONE_VIDEO_BY_ID,
+    videoId,
+  };
+};
+
+export const deleteVideo = (videoId: string) => {
+  return {
+    type: actionTypes.DELETE_VIDEO,
+    videoId,
+  };
+}

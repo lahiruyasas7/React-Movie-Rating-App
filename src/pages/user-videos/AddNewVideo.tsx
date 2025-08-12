@@ -1,9 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Video } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "reactstrap";
-import { createVideo } from "../../redux/actions";
+import { createVideo, updateVideo, updateVideoType } from "../../redux/actions";
 import { RootState } from "../../redux/reducers";
+import { useSearchParams } from "react-router-dom";
+import { getOneVideoByVideoId } from "../../redux/actions";
 
 const AddNewVideo = () => {
   const [name, setName] = useState("");
@@ -12,11 +14,31 @@ const AddNewVideo = () => {
   const [previewURL, setPreviewURL] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [isUpdating, setIsUpdating] = useState(false);
 
-  const { userDetails } = useSelector((state: RootState) => state.reducer);
- 
+  const { userDetails, oneVideo } = useSelector(
+    (state: RootState) => state.reducer
+  );
+
+  const [searchParams] = useSearchParams();
+
+  const videoId = searchParams.get("videoId");
+  console.log("add video id", videoId);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    if (videoId) {
+      dispatch(getOneVideoByVideoId(videoId));
+      setIsUpdating(true);
+    }
+  }, [videoId]);
+
+  useEffect(() => {
+    if (oneVideo) {
+    }
+  }, [oneVideo]);
+  console.log("isUpdating", isUpdating);
+  console.log("oneVideo", oneVideo);
   const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -31,9 +53,17 @@ const AddNewVideo = () => {
     }
   };
 
+  useEffect(() => {
+    if (isUpdating && oneVideo) {
+      setName(oneVideo.name || "");
+      setDescription(oneVideo.description || "");
+      setPreviewURL(oneVideo.s3Url || null);
+    }
+  }, [isUpdating, oneVideo]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!videoFile || !name || !description) {
+    if (!isUpdating && (!videoFile || !name || !description)) {
       setMessage("All fields are required.");
       return;
     }
@@ -42,20 +72,31 @@ const AddNewVideo = () => {
     setMessage("");
 
     try {
-      const payload = {
-        name,
-        description,
-        video: videoFile,
-      };
+      if (isUpdating && videoId) {
+        const payload: updateVideoType = {
+          name,
+          description,
+        };
+        if (videoFile) {
+          payload.video = videoFile;
+        }
 
-      if (payload && userDetails?.userId) {
+        dispatch(updateVideo(videoId, payload));
+      } else if (userDetails?.userId && !isUpdating && videoFile) {
+        const payload = {
+          name,
+          description,
+          video: videoFile,
+        };
         dispatch(createVideo(payload, userDetails.userId));
       }
 
-      setName("");
-      setDescription("");
-      setVideoFile(null);
-      setPreviewURL(null);
+      if (!isUpdating) {
+        setName("");
+        setDescription("");
+        setVideoFile(null);
+        setPreviewURL(null);
+      }
     } catch (error) {
       setMessage("Failed to upload video.");
     } finally {
@@ -123,7 +164,7 @@ const AddNewVideo = () => {
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? "Uploading..." : "Upload Video"}
+          {isUpdating ? "Update Video" : "Upload Video"}
         </Button>
 
         {message && (
