@@ -10,7 +10,7 @@ export const jsonToFormData = (obj: any) => {
   Object.keys(obj).map(async (e) => {
     if (Array.isArray(obj[e])) {
       //Check whether the property is an array or not
-      obj[e].map(async (res, index) => {
+      obj[e].map(async (res: any, index: any) => {
         await formData.append(`${e}[${index}]`, res);
       });
     } else await formData.append(e, obj[e]);
