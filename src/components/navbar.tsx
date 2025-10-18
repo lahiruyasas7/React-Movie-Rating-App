@@ -111,7 +111,7 @@ const Navbar = () => {
             href="/trending"
             className="hover:text-[#facc15] text-white transition-colors duration-300"
           >
-            🔥 Trending
+            🔥 Trending Movies
           </NavLink>
         </NavItem>
 
