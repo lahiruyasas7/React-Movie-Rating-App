@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllTvSeries } from "../../redux/actions";
 import TvSeriesCard from "./components/TvSeriesCard";
+import SingleViewModal from "../home/componenets/singleViewModal";
 
 interface TvSeriesData {
   adult: boolean;
@@ -21,6 +22,8 @@ interface TvSeriesData {
 }
 
 function TvSeries() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTvSeriesData, setSelectedTvSeriesData] = useState({});
   const { tvSeriesList } = useSelector((state: any) => state.reducer);
 
   const dispatch = useDispatch();
@@ -29,18 +32,33 @@ function TvSeries() {
     dispatch(getAllTvSeries());
   }, []);
 
+  const selectedCardHandler = (data: any) => {
+    setSelectedTvSeriesData(data);
+    setIsModalOpen(!isModalOpen);
+  };
+
   console.log("", tvSeriesList);
   return (
     <div className="min-h-screen">
       <div className="w-full flex flex-wrap gap-12 p-5 justify-center">
         {tvSeriesList &&
           tvSeriesList.results.map((data: TvSeriesData) => (
-            <div key={data.id}>
+            <div
+              key={data.id}
+              onClick={() => {
+                selectedCardHandler(data);
+              }}
+            >
               {" "}
               <TvSeriesCard key={data.id} tvSeriesData={data} />
             </div>
           ))}
       </div>
+      <SingleViewModal
+        modal={isModalOpen}
+        toggle={selectedCardHandler}
+        selectedMovieData={selectedTvSeriesData}
+      />
     </div>
   );
 }
