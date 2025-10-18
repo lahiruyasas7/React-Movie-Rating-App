@@ -9,6 +9,7 @@ const initialState = {
   allMessages: null,
   userVideos: null,
   oneVideo: null,
+  popularMovies: null,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -78,6 +79,16 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         oneVideo: null,
+      };
+    case actionTypes.GET_POPULAR_MOVIES_SUCCESS:
+      return {
+        ...state,
+        popularMovies: action.data,
+      };
+    case actionTypes.GET_POPULAR_MOVIES_FAIL:
+      return {
+        ...state,
+        popularMovies: null,
       };
     default:
       return state;
