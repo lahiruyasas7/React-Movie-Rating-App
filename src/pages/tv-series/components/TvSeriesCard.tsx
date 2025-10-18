@@ -1,8 +1,9 @@
 import React from "react";
 import { Star } from "react-feather";
 import { Card, CardBody, CardTitle, Col, Label, Row } from "reactstrap";
+import { tvSeriesCardType } from "../../../types/types";
 
-function TvSeriesCard({tvSeriesData}:any) {
+function TvSeriesCard({ tvSeriesData }: { tvSeriesData: tvSeriesCardType }) {
   return (
     <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
       <Card
@@ -15,7 +16,7 @@ function TvSeriesCard({tvSeriesData}:any) {
       >
         <img
           className="w-full h-[250px] object-fill rounded-t-2xl"
-          alt={tvSeriesData?.title}
+          alt={tvSeriesData?.name}
           src={`https://image.tmdb.org/t/p/w500${tvSeriesData?.poster_path}`}
         />
 
@@ -23,13 +24,13 @@ function TvSeriesCard({tvSeriesData}:any) {
           <CardTitle
             tag="h5"
             className="font-semibold text-base truncate"
-            title={tvSeriesData?.title}
+            title={tvSeriesData?.name}
           >
-            🎬 {tvSeriesData?.title}
+            🎬 {tvSeriesData?.name}
           </CardTitle>
 
           <Label className="text-sm text-white block mb-2">
-            📅 Release: {tvSeriesData?.release_date}
+            📅 Release: {tvSeriesData?.first_air_date}
           </Label>
 
           <Row className="text-sm text-white font-medium">
