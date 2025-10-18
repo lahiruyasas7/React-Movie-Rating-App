@@ -254,15 +254,25 @@ export function* deleteVideoSaga({ videoId }: any): Generator<any, void, any> {
 export function* getPopularMovies() {
   try {
     const { data } = yield axios.get(
-      `${import.meta.env.VITE_MOVIE_API_URL}movie/popular?language=en-US&page=1`
+      `${
+        import.meta.env.VITE_MOVIE_API_URL
+      }movie/popular?language=en-US&page=1`,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${
+            import.meta.env.VITE_MOVIE_DB_READ_ACCESS_TOKEN
+          }`,
+        },
+      }
     );
 
-    yield put({ type: actionTypes.GET_MOVIES_SUCCESS, data: data });
+    yield put({ type: actionTypes.GET_POPULAR_MOVIES_SUCCESS, data: data });
   } catch (e: any) {
     console.error(
-      e.response?.data?.message || "Error in retrieving movie data"
+      e.response?.data?.message || "Error in retrieving popular movie data"
     );
-    yield put({ type: actionTypes.GET_MOVIES_FAIL });
+    yield put({ type: actionTypes.GET_POPULAR_MOVIES_FAIL });
   }
 }
 
