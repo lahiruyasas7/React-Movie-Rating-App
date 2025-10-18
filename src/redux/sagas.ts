@@ -9,7 +9,9 @@ import { toast } from "react-toastify";
 export function* getAllMovies() {
   try {
     const { data } = yield axios.get(
-      `https://api.themoviedb.org/3/discover/movie?api_key=96b9dd19fdc034edccdba6d81881343a`
+      `${import.meta.env.VITE_MOVIE_API_URL}discover/movie?api_key=${
+        import.meta.env.VITE_MOVIE_DB_API_KEY
+      }`
     );
 
     yield put({ type: actionTypes.GET_MOVIES_SUCCESS, data: data });
@@ -24,7 +26,9 @@ export function* getAllMovies() {
 export function* getAllTvSeriesSaga() {
   try {
     const { data } = yield axios.get(
-      `https://api.themoviedb.org/3/discover/tv?api_key=96b9dd19fdc034edccdba6d81881343a`
+      `${import.meta.env.VITE_MOVIE_API_URL}discover/tv?api_key=${
+        import.meta.env.VITE_MOVIE_DB_API_KEY
+      }`
     );
 
     yield put({ type: actionTypes.GET_TV_SERIES_SUCCESS, data: data });
@@ -247,6 +251,31 @@ export function* deleteVideoSaga({ videoId }: any): Generator<any, void, any> {
   }
 }
 
+export function* getPopularMovies() {
+  try {
+    const { data } = yield axios.get(
+      `${
+        import.meta.env.VITE_MOVIE_API_URL
+      }movie/popular?language=en-US&page=1`,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${
+            import.meta.env.VITE_MOVIE_DB_READ_ACCESS_TOKEN
+          }`,
+        },
+      }
+    );
+
+    yield put({ type: actionTypes.GET_POPULAR_MOVIES_SUCCESS, data: data });
+  } catch (e: any) {
+    console.error(
+      e.response?.data?.message || "Error in retrieving popular movie data"
+    );
+    yield put({ type: actionTypes.GET_POPULAR_MOVIES_FAIL });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -260,4 +289,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.UPDATE_VIDEO, updateVideoSaga);
   yield takeLatest(actionTypes.GET_ONE_VIDEO_BY_ID, getOneVideoByVideoIdSaga);
   yield takeLatest(actionTypes.DELETE_VIDEO, deleteVideoSaga);
+  yield takeLatest(actionTypes.GET_POPULAR_MOVIES, getPopularMovies);
 }

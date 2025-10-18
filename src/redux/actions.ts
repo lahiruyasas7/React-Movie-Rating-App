@@ -26,7 +26,10 @@ export const actionTypes = {
   GET_ONE_VIDEO_BY_ID: "GET_ONE_VIDEO_BY_ID",
   GET_ONE_VIDEO_BY_ID_SUCCESS: "GET_ONE_VIDEO_BY_ID_SUCCESS",
   GET_ONE_VIDEO_BY_ID_FAIL: "GET_ONE_VIDEO_BY_ID_FAIL",
-  DELETE_VIDEO: 'DELETE_VIDEO',
+  DELETE_VIDEO: "DELETE_VIDEO",
+  GET_POPULAR_MOVIES: "GET_POPULAR_MOVIES",
+  GET_POPULAR_MOVIES_SUCCESS: "GET_POPULAR_MOVIES_SUCCESS",
+  GET_POPULAR_MOVIES_FAIL: "GET_POPULAR_MOVIES_FAIL",
 };
 
 export interface registerDataType {
@@ -153,4 +156,11 @@ export const deleteVideo = (videoId: string) => {
     type: actionTypes.DELETE_VIDEO,
     videoId,
   };
-}
+};
+
+export const getPopularMovies = (page: number) => {
+  return {
+    type: actionTypes.GET_POPULAR_MOVIES,
+    page,
+  };
+};

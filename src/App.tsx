@@ -23,13 +23,13 @@ import { RootState } from "./redux/reducers";
 import LoaderOverlay from "./components/CustomLoader";
 import UserVideos from "./pages/user-videos/UserVideos";
 import AddNewVideo from "./pages/user-videos/AddNewVideo";
+import PopularMovies from "./pages/popular-movies/PopularMovies";
 
 function App() {
-
   const loader = useSelector((state: RootState) => state.reducer.loader);
   return (
     <div>
-      {loader && <LoaderOverlay/>}
+      {loader && <LoaderOverlay />}
       <Router>
         <Navbar />
         <Routes>
@@ -81,6 +81,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Page404 />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/popular-movies"
+            element={
+              <ProtectedRoute>
+                <PopularMovies />
               </ProtectedRoute>
             }
           />
