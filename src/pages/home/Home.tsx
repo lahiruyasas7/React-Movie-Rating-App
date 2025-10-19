@@ -3,22 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllMovies } from "../../redux/actions";
 import MovieCard from "./componenets/movieCard";
 import SingleViewModal from "./componenets/singleViewModal";
+import { MovieData } from "../../types/types";
 
 
 const Home = () => {
 
-  interface MovieData {
-    adult: boolean;
-    id: number;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    release_date: string;
-    title: string;
-    vote_average: number;
-    vote_count: number;
-  }
+  // interface MovieData {
+  //   adult: boolean;
+  //   id: number;
+  //   original_title: string;
+  //   overview: string;
+  //   popularity: number;
+  //   poster_path: string;
+  //   release_date: string;
+  //   title: string;
+  //   vote_average: number;
+  //   vote_count: number;
+  // }
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMovieData, setSelectedMovieData] = useState({});
   const dispatch = useDispatch();
