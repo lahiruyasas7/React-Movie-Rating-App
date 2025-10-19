@@ -51,9 +51,26 @@ function PopularMovies() {
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageChange}
-            containerClassName={"pagination flex gap-2"}
-            activeClassName={"active text-blue-500 font-semibold"}
             forcePage={currentPage - 1} // keeps pagination in sync with state
+            containerClassName={
+              "flex justify-center items-center mt-8 space-x-2"
+            } // Flex container for pagination
+            pageClassName={
+              "block border border-gray-300 rounded px-3 py-2 hover:bg-gray-100"
+            } // Individual page number
+            pageLinkClassName={"text-gray-700"} // Link within page number
+            previousClassName={
+              "block border border-gray-300 rounded px-3 py-2 hover:bg-gray-100"
+            } // Previous button
+            previousLinkClassName={"text-gray-700"} // Link within previous button
+            nextClassName={
+              "block border border-gray-300 rounded px-3 py-2 hover:bg-gray-100"
+            } // Next button
+            nextLinkClassName={"text-gray-700"} // Link within next button
+            breakClassName={"block px-3 py-2"} // Break label (...)
+            breakLinkClassName={"text-gray-700"} // Link within break label
+            activeClassName={"bg-blue-500 text-white border-blue-500"} // Active page number
+            disabledClassName={"opacity-50 cursor-not-allowed"} // Disabled buttons
           />
         </div>
       )}
