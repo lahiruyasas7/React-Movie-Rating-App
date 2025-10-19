@@ -156,14 +156,14 @@ const UserProfile = () => {
               )}
             />
 
-            <Label className="text-white">Last Name</Label>
+            <Label className="text-white mt-3">Last Name</Label>
             <Controller
               name="lastName"
               control={control}
               render={({ field }) => <Input {...field} />}
             />
 
-            <Label className="text-white">Email</Label>
+            <Label className="text-white mt-3">Email</Label>
             <Controller
               name="email"
               control={control}
@@ -179,21 +179,21 @@ const UserProfile = () => {
               )}
             />
 
-            <Label className="text-white">Phone</Label>
+            <Label className="text-white mt-3">Phone</Label>
             <Controller
               name="phone"
               control={control}
               render={({ field }) => <Input {...field} />}
             />
 
-            <Label className="text-white">Address</Label>
+            <Label className="text-white mt-3">Address</Label>
             <Controller
               name="address"
               control={control}
               render={({ field }) => <Input {...field} />}
             />
 
-            <Label className="text-white">Date of Birth</Label>
+            <Label className="text-white mt-3">Date of Birth</Label>
             <Controller
               name="dateOfBirth"
               control={control}
