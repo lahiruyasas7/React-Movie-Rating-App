@@ -113,7 +113,7 @@ const UserProfile = () => {
   console.log("uploadedImage", uploadedImage);
   return (
     <div className="flex flex-col items-center justify-center p-4 h-screen">
-      <Row>
+      <Row className="mt-5">
         <input
           type="file"
           accept=".jpg, .jpeg, .png, .gif"
