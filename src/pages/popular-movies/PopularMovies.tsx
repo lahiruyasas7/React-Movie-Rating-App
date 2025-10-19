@@ -47,7 +47,7 @@ function PopularMovies() {
             previousLabel={"← Previous"}
             nextLabel={"Next →"}
             breakLabel={"..."}
-            pageCount={popularMovies.total_pages}
+            pageCount={Math.min(popularMovies.total_pages, 500)}
             marginPagesDisplayed={2}
             pageRangeDisplayed={3}
             onPageChange={handlePageChange}
