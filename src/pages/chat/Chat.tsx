@@ -91,48 +91,53 @@ export default function ChatPage({ targetUserId }: { targetUserId: string }) {
   }, [messages]);
 
   return (
-    <div style={{ maxWidth: 500, margin: "auto" }}>
-      <h2>Chat</h2>
-      <div
-        style={{
-          height: 400,
-          overflowY: "auto",
-          border: "1px solid #ccc",
-          padding: 10,
-        }}
-      >
+    <div className="flex flex-col h-screen max-w-md mx-auto text-white mt-5">
+      {/* Header */}
+      <div className="sticky top-0 bg-gradient-to-r from-gray-800/90 to-gray-900/90 backdrop-blur-md shadow-md py-4 px-5 rounded-b-2xl flex items-center justify-between">
+        <h2 className="text-xl font-semibold">💬 Chat</h2>
+        <span className="text-sm text-gray-400">Connected</span>
+      </div>
+
+      {/* Chat container */}
+      <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 bg-gradient-to-br from-gray-900 via-zinc-900 to-black rounded-2xl mt-3 border border-gray-800/60 shadow-inner">
         {messages.map((msg) => (
           <div
             key={msg.id}
-            style={{
-              textAlign: msg.senderId === user.user.userId ? "right" : "left",
-              marginBottom: 10,
-            }}
+            className={`flex ${
+              msg.senderId === user.user.userId
+                ? "justify-end"
+                : "justify-start"
+            }`}
           >
-            <span
-              style={{
-                display: "inline-block",
-                background:
-                  msg.senderId === user.user.userId ? "#daf8cb" : "#f1f1f1",
-                padding: "6px 10px",
-                borderRadius: 8,
-              }}
+            <div
+              className={`max-w-[75%] px-4 py-2 rounded-2xl text-sm leading-relaxed transition-all duration-200 ${
+                msg.senderId === user.user.userId
+                  ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md shadow-indigo-500/30"
+                  : "bg-gray-800/80 text-gray-200 border border-gray-700/60"
+              }`}
             >
               {msg.content}
-            </span>
+            </div>
           </div>
         ))}
         <div ref={bottomRef} />
       </div>
 
-      <div style={{ display: "flex", marginTop: 10 }}>
+      {/* Message input */}
+      <div className="mt-3 flex items-center gap-3 bg-gray-900/90 border border-gray-800/60 p-3 rounded-2xl backdrop-blur-md shadow-md">
         <input
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="Type message..."
-          style={{ flex: 1, marginRight: 10 }}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Type your message..."
+          className="flex-1 bg-transparent text-gray-100 placeholder-gray-500 outline-none px-3"
         />
-        <button onClick={sendMessage}>Send</button>
+        <button
+          onClick={sendMessage}
+          className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-xl font-medium text-sm hover:scale-105 hover:shadow-[0_0_15px_#6366f1] transition-all"
+        >
+          Send
+        </button>
       </div>
     </div>
   );
