@@ -251,12 +251,12 @@ export function* deleteVideoSaga({ videoId }: any): Generator<any, void, any> {
   }
 }
 
-export function* getPopularMovies() {
+export function* getPopularMovies({page}: {type: string; page: number}) {
   try {
     const { data } = yield axios.get(
       `${
         import.meta.env.VITE_MOVIE_API_URL
-      }movie/popular?language=en-US&page=1`,
+      }movie/popular?language=en-US&page=${page}`,
       {
         headers: {
           accept: "application/json",
