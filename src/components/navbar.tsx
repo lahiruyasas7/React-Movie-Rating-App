@@ -114,6 +114,14 @@ const Navbar = () => {
             🔥 Trending Movies
           </NavLink>
         </NavItem>
+        <NavItem>
+          <NavLink
+            href="/chat-list-page"
+            className="hover:text-[#facc15] text-white transition-colors duration-300"
+          >
+            Chat
+          </NavLink>
+        </NavItem>
 
         {!userData?.accessToken ? (
           <NavItem>
