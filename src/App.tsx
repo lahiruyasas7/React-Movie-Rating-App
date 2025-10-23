@@ -92,8 +92,15 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/chat-list-page"
+            element={
+              <ProtectedRoute>
+                <ChatListPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/google-success" element={<GoogleSuccess />} />
-          <Route path="/chat-list-page" element={<ChatListPage />} />
           <Route path="/chat/:targetUserId" element={<ChatPageWrapper />} />
         </Routes>
         <Footer />
