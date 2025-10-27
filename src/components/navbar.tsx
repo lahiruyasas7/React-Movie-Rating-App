@@ -119,7 +119,7 @@ const Navbar = () => {
             href="/chat-list-page"
             className="hover:text-[#facc15] text-white transition-colors duration-300"
           >
-            Chat
+           💬 Chat
           </NavLink>
         </NavItem>
 
