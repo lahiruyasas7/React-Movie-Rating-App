@@ -8,18 +8,21 @@ import {
   Form,
   FormFeedback,
   NavLink,
+  Spinner,
 } from "reactstrap";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 //import { dispatch } from "../../utils/common-hooks";
 import { loginListen } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { Eye, EyeOff } from "react-feather";
+import { RootState } from "../../redux/reducers";
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const { loginLoader } = useSelector((state: RootState) => state.reducer);
   interface LoginDataType {
     password: string;
     loginEmail: string;
@@ -123,7 +126,7 @@ const Auth = () => {
                       type={showPassword ? "text" : "password"}
                       className="w-full px-4 py-2 rounded-xl bg-gray-800 text-black border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       invalid={!!errors.password}
-                      autoComplete="off"   
+                      autoComplete="off"
                       {...field}
                     />
                     <span
@@ -167,8 +170,18 @@ const Auth = () => {
           </div>
 
           <div className="flex justify-center">
-            <Button className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2 rounded-xl transition duration-300 w-full max-w-[150px]">
-              Login
+            <Button
+              className="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-6 py-2 rounded-xl transition duration-300 w-full max-w-[150px]"
+              disabled={loginLoader}
+            >
+              {loginLoader ? (
+                <>
+                  <Spinner size="sm" className="me-2" />
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
           </div>
         </Form>
