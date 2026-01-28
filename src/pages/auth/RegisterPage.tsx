@@ -10,12 +10,14 @@ import {
   Label,
   Row,
   NavLink,
+  Spinner,
 } from "reactstrap";
 import * as yup from "yup";
 import { registerDataType, registerUser } from "../../redux/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { Eye, EyeOff } from "react-feather";
+import { RootState } from "../../redux/reducers";
 
 const schema = yup
   .object()
@@ -37,6 +39,8 @@ const schema = yup
 
 const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
+
+  const { loader } = useSelector((state: RootState) => state.reducer);
   const dispatch = useDispatch();
   const defaultValues = {
     email: "",
@@ -245,7 +249,14 @@ const RegisterPage = () => {
           {/* Submit Button */}
           <div className="mt-6">
             <Button className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-black font-semibold rounded-xl transition duration-300">
-              Register
+               {loader ? (
+                <>
+                  <Spinner size="sm" className="me-2" />
+                  Registering...
+                </>
+              ) : (
+                "Register"
+              )}
             </Button>
           </div>
 
