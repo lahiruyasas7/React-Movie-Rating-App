@@ -76,14 +76,14 @@ export function* registerUserSaga(action: {
   payload: registerDataType;
 }): Generator<any, void, any> {
   try {
-    //yield put(setIsAddLoader(true));
+    yield put(handleLoader(true));
     const response = yield API.post(`/auth/register`, action.payload);
     if (response.status === 201) {
       toast.success("User Register Success");
     }
-    //yield put(setIsAddLoader(false));
+    yield put(handleLoader(false));
   } catch (e: any) {
-    //yield put(setIsAddLoader(false));
+    yield put(handleLoader(false));
     let message = "Cannot Register User";
     if (e?.response?.data?.message) {
       message = `${message}: ${e.response.data.message}`;
