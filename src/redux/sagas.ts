@@ -45,7 +45,7 @@ export function* loginUser(action: any) {
   try {
     yield put({
       type: actionTypes.LOGIN_LOADER_HANDLE,
-      payload: true,
+      data: true,
     });
 
     yield API.post(`auth/login`, data).then((res) => {
@@ -55,12 +55,12 @@ export function* loginUser(action: any) {
     toast.success("User Login Success");
     yield put({
       type: actionTypes.LOGIN_LOADER_HANDLE,
-      payload: false,
+      data: false,
     });
   } catch (e: any) {
     yield put({
       type: actionTypes.LOGIN_LOADER_HANDLE,
-      payload: false,
+      data: false,
     });
     yield put({
       type: actionTypes.IS_LOGIN_ERROR,

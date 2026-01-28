@@ -10,6 +10,7 @@ const initialState = {
   userVideos: null,
   oneVideo: null,
   popularMovies: null,
+  loginLoader: false,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -48,6 +49,12 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         loader: action.data,
+      };
+
+    case actionTypes.LOGIN_LOADER_HANDLE:
+      return {
+        ...state,
+        loginLoader: action.data,
       };
 
     case actionTypes.GET_ALL_MESSAGES_SUCCESS:
