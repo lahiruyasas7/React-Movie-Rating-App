@@ -1,5 +1,7 @@
 import axios from "axios";
 import { USER_ITEM } from "./constants";
+import { logOutUser } from "../redux/actions";
+import store from "../redux/store";
 
 export const API = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL}/`,
@@ -21,7 +23,7 @@ API.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 // 🔁 Refresh logic
@@ -34,6 +36,7 @@ const processQueue = (error: any, token: string | null = null) => {
       prom.resolve(token);
     } else {
       prom.reject(error);
+      console.log("hi i am expired");
     }
   });
   failedQueue = [];
@@ -47,7 +50,7 @@ const refreshAccessToken = async () => {
       {},
       {
         withCredentials: true,
-      }
+      },
     );
     console.log("response data", response.data);
     const { accessToken } = response.data;
@@ -59,7 +62,8 @@ const refreshAccessToken = async () => {
 
     return accessToken;
   } catch (err) {
-    console.error("Refresh token failed:", err);
+    console.error("Refresh token expired. Logging out...", err);
+    store.dispatch(logOutUser());
     return null;
   }
 };
@@ -109,5 +113,5 @@ API.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
