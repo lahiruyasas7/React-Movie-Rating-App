@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import Avatar from "react-avatar";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/reducers";
-import { getUserDetails } from "../redux/actions";
+import { getUserDetails, logOutUser } from "../redux/actions";
 
 const Navbar = () => {
   interface UserData {
@@ -35,7 +35,7 @@ const Navbar = () => {
   }, [userData]);
 
   const logoutHandler = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
     event.stopPropagation();
     Swal.fire({
@@ -53,9 +53,8 @@ const Navbar = () => {
       allowOutsideClick: false,
     }).then((result: any) => {
       if (result.isConfirmed) {
-        localStorage.removeItem("user");
+        dispatch(logOutUser());
         setUserData(undefined);
-        navigate("/");
       }
     });
   };
@@ -114,14 +113,16 @@ const Navbar = () => {
             🔥 Trending Movies
           </NavLink>
         </NavItem>
-        <NavItem>
-          <NavLink
-            href="/chat-list-page"
-            className="hover:text-[#facc15] text-white transition-colors duration-300"
-          >
-           💬 Chat
-          </NavLink>
-        </NavItem>
+        {userData?.user?.userId && (
+          <NavItem>
+            <NavLink
+              href="/chat-list-page"
+              className="hover:text-[#facc15] text-white transition-colors duration-300"
+            >
+              💬 Chat
+            </NavLink>
+          </NavItem>
+        )}
 
         {!userData?.accessToken ? (
           <NavItem>
