@@ -110,7 +110,7 @@ const UserProfile = () => {
       setUploadedImage(file);
     }
   };
-  console.log("uploadedImage", uploadedImage);
+  console.log("profile image", userDetails?.profileImageUrl);
   return (
     <div className="flex flex-col items-center justify-center p-4 h-screen">
       <Row className="mt-5">
@@ -129,8 +129,9 @@ const UserProfile = () => {
         >
           <Avatar
             src={
-              createImageObjectURL(uploadedImage) ??
-              (userDetails?.profileImageUrl || undefined)
+              uploadedImage
+                ? createImageObjectURL(uploadedImage)
+                : userDetails?.profileImageUrl
             }
             name={`${userDetails?.firstName || ""} ${
               userDetails?.lastName || ""
