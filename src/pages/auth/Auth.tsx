@@ -19,6 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { Eye, EyeOff } from "react-feather";
 import { RootState } from "../../redux/reducers";
+import GoogleLogoImg from "/custom-images/google-logo.png";
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -151,11 +152,7 @@ const Auth = () => {
               Or Login with
             </div>{" "}
             <button onClick={handleGoogleLogin} type="button">
-              <img
-                src="custom-images/google-logo.png"
-                alt="Google"
-                style={{ width: 20 }}
-              />
+              <img src={GoogleLogoImg} alt="Google" style={{ width: 20 }} />
             </button>
           </div>
 
