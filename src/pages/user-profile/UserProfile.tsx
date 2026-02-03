@@ -201,7 +201,11 @@ const UserProfile = () => {
               render={({ field }) => <Input type="date" {...field} />}
             />
 
-            <Button className="mt-4" type="submit" disabled={!isDirty}>
+            <Button
+              className="mt-4"
+              type="submit"
+              disabled={!isDirty && !uploadedImage}
+            >
               Update Profile
             </Button>
           </Form>
