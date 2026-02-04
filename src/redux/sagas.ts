@@ -11,13 +11,13 @@ export function* getAllMovies() {
     const { data } = yield axios.get(
       `${import.meta.env.VITE_MOVIE_API_URL}discover/movie?api_key=${
         import.meta.env.VITE_MOVIE_DB_API_KEY
-      }`,
+      }`
     );
 
     yield put({ type: actionTypes.GET_MOVIES_SUCCESS, data: data });
   } catch (e: any) {
     console.error(
-      e.response?.data?.message || "Error in retrieving movie data",
+      e.response?.data?.message || "Error in retrieving movie data"
     );
     yield put({ type: actionTypes.GET_MOVIES_FAIL });
   }
@@ -28,13 +28,13 @@ export function* getAllTvSeriesSaga() {
     const { data } = yield axios.get(
       `${import.meta.env.VITE_MOVIE_API_URL}discover/tv?api_key=${
         import.meta.env.VITE_MOVIE_DB_API_KEY
-      }`,
+      }`
     );
 
     yield put({ type: actionTypes.GET_TV_SERIES_SUCCESS, data: data });
   } catch (e: any) {
     console.error(
-      e.response?.data?.message || "Error in retrieving Tv series data",
+      e.response?.data?.message || "Error in retrieving Tv series data"
     );
     yield put({ type: actionTypes.GET_TV_SERIES_FAIL });
   }
@@ -117,7 +117,7 @@ export function* getUserDetailsSaga(action: { type: string; userId: string }) {
     });
   } catch (e: any) {
     toast.error(
-      e.response?.data?.message || "Error in retrieving user details data",
+      e.response?.data?.message || "Error in retrieving user details data"
     );
     yield put({ type: actionTypes.GET_USER_DETAILS_FAIL });
   }
@@ -136,7 +136,7 @@ export function* updateUserDetailsSaga({
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      },
+      }
     );
     if (response.status === 200) {
       yield put(handleLoader(false));
@@ -155,7 +155,7 @@ export function* getAllMessagesSaga(action: {
 }) {
   try {
     const { data } = yield API.get(
-      `chat/messages?user1=${action.userId}&user2=${action.targetUserId}`,
+      `chat/messages?user1=${action.userId}&user2=${action.targetUserId}`
     );
     yield put({
       type: actionTypes.GET_ALL_MESSAGES_SUCCESS,
@@ -180,7 +180,7 @@ export function* createVideoSaga({
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      },
+      }
     );
     if (response.status === 201) {
       yield put(handleLoader(false));
@@ -201,7 +201,7 @@ export function* getUserVideosSaga(action: { type: string; userId: string }) {
     });
   } catch (e: any) {
     toast.error(
-      e.response?.data?.message || "Error in retrieving user Videos data",
+      e.response?.data?.message || "Error in retrieving user Videos data"
     );
     yield put({ type: actionTypes.GET_USER_VIDEOS_FAIL });
   }
@@ -220,7 +220,7 @@ export function* updateVideoSaga({
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      },
+      }
     );
     if (response.status === 200) {
       yield put(handleLoader(false));
@@ -244,7 +244,7 @@ export function* getOneVideoByVideoIdSaga(action: {
     });
   } catch (e: any) {
     toast.error(
-      e.response?.data?.message || "Error in retrieving Video by ID data",
+      e.response?.data?.message || "Error in retrieving Video by ID data"
     );
     yield put({ type: actionTypes.GET_ONE_VIDEO_BY_ID_FAIL });
   }
@@ -277,13 +277,13 @@ export function* getPopularMovies({ page }: { type: string; page: number }) {
             import.meta.env.VITE_MOVIE_DB_READ_ACCESS_TOKEN
           }`,
         },
-      },
+      }
     );
 
     yield put({ type: actionTypes.GET_POPULAR_MOVIES_SUCCESS, data: data });
   } catch (e: any) {
     console.error(
-      e.response?.data?.message || "Error in retrieving popular movie data",
+      e.response?.data?.message || "Error in retrieving popular movie data"
     );
     yield put({ type: actionTypes.GET_POPULAR_MOVIES_FAIL });
   }

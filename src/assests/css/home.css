@@ -1,22 +1,22 @@
 .movie-card {
-    border-radius: 25px;
-    padding-bottom: 40px;
-    transition: 0.1S;
-    /* background-color: aqua; */
+  border-radius: 25px;
+  padding-bottom: 40px;
+  transition: 0.1s;
+  /* background-color: aqua; */
 }
 
 .movie-card:hover {
-    background-color: rgb(243, 243, 243, 0.4) !important;
-    transition: 0.1S;
+  background-color: rgb(243, 243, 243, 0.4) !important;
+  transition: 0.1s;
 }
 
 .movie-card:active {
-    background-color: rgb(243, 243, 243, 0.6) !important;
-    transition: 0.1S;
+  background-color: rgb(243, 243, 243, 0.6) !important;
+  transition: 0.1s;
 }
 
 .custom-placeholder {
-    width: 100%;
-    background-image: url("../custom_images/placeholder.webp");
-    background-size: contain;
+  width: 100%;
+  background-image: url("../custom_images/placeholder.webp");
+  background-size: contain;
 }

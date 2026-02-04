@@ -16,7 +16,7 @@ export default function ChatListPage() {
   useEffect(() => {
     axios
       .get(
-        `${import.meta.env.VITE_API_URL}chat/get-all-chats?exclude=${user.user.userId}`,
+        `${import.meta.env.VITE_API_URL}chat/get-all-chats?exclude=${user.user.userId}`
       )
       .then((res) => setUsers(res.data))
       .catch((err) => console.error("Error fetching chat users:", err));

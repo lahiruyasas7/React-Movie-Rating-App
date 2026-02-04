@@ -30,7 +30,7 @@ export const actionTypes = {
   GET_POPULAR_MOVIES: "GET_POPULAR_MOVIES",
   GET_POPULAR_MOVIES_SUCCESS: "GET_POPULAR_MOVIES_SUCCESS",
   GET_POPULAR_MOVIES_FAIL: "GET_POPULAR_MOVIES_FAIL",
-  LOG_OUT: "LOG_OUT"
+  LOG_OUT: "LOG_OUT",
 };
 
 export interface registerDataType {
@@ -168,6 +168,6 @@ export const getPopularMovies = (page: number) => {
 
 export const logOutUser = () => {
   return {
-    type: actionTypes.LOG_OUT
-  }
-}
+    type: actionTypes.LOG_OUT,
+  };
+};

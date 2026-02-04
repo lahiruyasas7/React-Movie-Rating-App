@@ -12,7 +12,7 @@ function UserVideos() {
   const dispatch = useDispatch();
 
   const { userDetails, userVideos } = useSelector(
-    (state: RootState) => state.reducer,
+    (state: RootState) => state.reducer
   );
 
   useEffect(() => {

@@ -35,7 +35,7 @@ const Navbar = () => {
   }, [userData]);
 
   const logoutHandler = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
     Swal.fire({
