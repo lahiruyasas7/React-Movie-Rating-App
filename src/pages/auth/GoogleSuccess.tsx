@@ -8,7 +8,7 @@ const GoogleSuccess = () => {
 
   useEffect(() => {
     const accessToken = params.get("accessToken");
-   
+
     const userParam = params.get("user");
     const user = userParam ? JSON.parse(userParam) : null;
 

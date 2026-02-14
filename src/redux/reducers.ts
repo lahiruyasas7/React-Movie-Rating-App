@@ -11,6 +11,7 @@ const initialState = {
   oneVideo: null,
   popularMovies: null,
   loginLoader: false,
+  topRatedMovies: null,
 };
 
 const reducer = (state = initialState, action: any) => {
@@ -96,6 +97,16 @@ const reducer = (state = initialState, action: any) => {
       return {
         ...state,
         popularMovies: null,
+      };
+    case actionTypes.GET_TOP_RATED_MOVIES_SUCCESS:
+      return {
+        ...state,
+        topRatedMovies: action.data,
+      };
+    case actionTypes.GET_TOP_RATED_MOVIES_FAIL:
+      return {
+        ...state,
+        topRatedMovies: null,
       };
     default:
       return state;

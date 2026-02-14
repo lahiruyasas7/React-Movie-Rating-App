@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import NoProfilePicImage from "/custom-images/no-profile-picture-icon.svg";
 
 interface MessageUserData {
   firstName: string;
@@ -39,7 +40,7 @@ export default function ChatListPage() {
                 className="flex items-center gap-4 bg-gradient-to-r from-gray-800/80 via-gray-900/60 to-gray-800/80 backdrop-blur-md p-4 rounded-2xl shadow-md hover:shadow-lg hover:from-gray-700/80 hover:via-gray-800/70 hover:to-gray-700/80 border border-gray-700/40"
               >
                 <img
-                  src={user.profileImageUrl || "https://via.placeholder.com/40"}
+                  src={user.profileImageUrl || NoProfilePicImage}
                   alt={user.firstName}
                   className="w-12 h-12 rounded-full object-cover border border-gray-600 shadow-inner"
                 />

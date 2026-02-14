@@ -37,7 +37,9 @@ function UserVideos() {
       </Row>
       <div className="px-6 py-10 text-white">
         <h1 className="text-3xl font-bold mb-8 text-center">🎬 My Videos</h1>
-
+        {!userVideos && (
+          <h3 className="flex justify-center items-center">No Videos Found</h3>
+        )}
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {userVideos?.map((video: any) => (
             <VideoCard key={video.id} video={video} />

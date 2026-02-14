@@ -249,7 +249,7 @@ const RegisterPage = () => {
           {/* Submit Button */}
           <div className="mt-6">
             <Button className="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-black font-semibold rounded-xl transition duration-300">
-               {loader ? (
+              {loader ? (
                 <>
                   <Spinner size="sm" className="me-2" />
                   Registering...

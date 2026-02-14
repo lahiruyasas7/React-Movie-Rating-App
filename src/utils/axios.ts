@@ -23,7 +23,7 @@ API.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  },
+  }
 );
 
 // 🔁 Refresh logic
@@ -50,7 +50,7 @@ const refreshAccessToken = async () => {
       {},
       {
         withCredentials: true,
-      },
+      }
     );
     console.log("response data", response.data);
     const { accessToken } = response.data;
@@ -113,5 +113,5 @@ API.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
+  }
 );

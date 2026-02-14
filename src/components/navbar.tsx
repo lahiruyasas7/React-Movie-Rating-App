@@ -35,7 +35,7 @@ const Navbar = () => {
   }, [userData]);
 
   const logoutHandler = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.stopPropagation();
     Swal.fire({
@@ -89,10 +89,10 @@ const Navbar = () => {
 
         <NavItem>
           <NavLink
-            href="/movies"
+            href="/top-rated-movies"
             className="hover:text-[#facc15] text-white transition-colors duration-300"
           >
-            <Film className="inline-block w-4 h-4 mr-1" /> Movies
+            <Film className="inline-block w-4 h-4 mr-1" /> Top-Rated Movies
           </NavLink>
         </NavItem>
 

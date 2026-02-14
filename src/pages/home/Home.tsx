@@ -20,7 +20,7 @@ const Home = () => {
     setSelectedMovieData(data);
     setIsModalOpen(!isModalOpen);
   };
-  
+
   return (
     <div className="min-h-screen">
       <div className="w-full flex flex-wrap gap-12 p-5 justify-center">
