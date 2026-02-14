@@ -289,6 +289,31 @@ export function* getPopularMovies({ page }: { type: string; page: number }) {
   }
 }
 
+export function* getTopRatedMoviesSaga({ page }: { type: string; page: number }) {
+  try {
+    const { data } = yield axios.get(
+      `${
+        import.meta.env.VITE_MOVIE_API_URL
+      }movie/top_rated?language=en-US&page=${page}`,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${
+            import.meta.env.VITE_MOVIE_DB_READ_ACCESS_TOKEN
+          }`,
+        },
+      }
+    );
+
+    yield put({ type: actionTypes.GET_TOP_RATED_MOVIES_SUCCESS, data: data });
+  } catch (e: any) {
+    console.error(
+      e.response?.data?.message || "Error in retrieving top rated movie data"
+    );
+    yield put({ type: actionTypes.GET_TOP_RATED_MOVIES_FAIL });
+  }
+}
+
 export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_ALL_MOVIES, getAllMovies);
   yield takeLatest(actionTypes.GET_ALL_TV_SERIES, getAllTvSeriesSaga);
@@ -304,4 +329,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.DELETE_VIDEO, deleteVideoSaga);
   yield takeLatest(actionTypes.GET_POPULAR_MOVIES, getPopularMovies);
   yield takeLatest(actionTypes.LOG_OUT, logoutUserSaga);
+  yield takeLatest(actionTypes.GET_TOP_RATED_MOVIES, getTopRatedMoviesSaga);
 }
