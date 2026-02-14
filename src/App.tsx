@@ -24,6 +24,7 @@ import LoaderOverlay from "./components/CustomLoader";
 import UserVideos from "./pages/user-videos/UserVideos";
 import AddNewVideo from "./pages/user-videos/AddNewVideo";
 import PopularMovies from "./pages/popular-movies/PopularMovies";
+import TopRatedMovies from "./pages/top-rated-movies/TopRatedMovies";
 
 function App() {
   const loader = useSelector((state: RootState) => state.reducer.loader);
@@ -89,6 +90,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <PopularMovies />
+              </ProtectedRoute>
+            }
+          />
+           <Route
+            path="/top-rated-movies"
+            element={
+              <ProtectedRoute>
+                <TopRatedMovies />
               </ProtectedRoute>
             }
           />
