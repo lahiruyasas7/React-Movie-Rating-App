@@ -31,6 +31,9 @@ export const actionTypes = {
   GET_POPULAR_MOVIES_SUCCESS: "GET_POPULAR_MOVIES_SUCCESS",
   GET_POPULAR_MOVIES_FAIL: "GET_POPULAR_MOVIES_FAIL",
   LOG_OUT: "LOG_OUT",
+  GET_TOP_RATED_MOVIES: "GET_TOP_RATED_MOVIES",
+  GET_TOP_RATED_MOVIES_SUCCESS: "GET_TOP_RATED_MOVIES_SUCCESS",
+  GET_TOP_RATED_MOVIES_FAIL: "GET_TOP_RATED_MOVIES_FAIL",
 };
 
 export interface registerDataType {
@@ -169,5 +172,12 @@ export const getPopularMovies = (page: number) => {
 export const logOutUser = () => {
   return {
     type: actionTypes.LOG_OUT,
+  };
+};
+
+export const getTopRatedMovies = (page: number) => {
+  return {
+    type: actionTypes.GET_TOP_RATED_MOVIES,
+    page,
   };
 };
