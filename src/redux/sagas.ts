@@ -5,6 +5,7 @@ import { API } from "../utils/axios";
 import { fireAlertError, jsonToFormData } from "../utils/customUtil";
 import { USER_ITEM } from "../utils/constants";
 import { toast } from "react-toastify";
+import { createVideoSaga } from "./videos/videosSaga";
 
 export function* getAllMovies() {
   try {
@@ -167,31 +168,6 @@ export function* getAllMessagesSaga(action: {
   }
 }
 
-export function* createVideoSaga({
-  userId,
-  payload,
-}: any): Generator<any, void, any> {
-  try {
-    yield put(handleLoader(true));
-    const response = yield API.post(
-      `/videos/add/${userId}`,
-      jsonToFormData(payload),
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    if (response.status === 201) {
-      yield put(handleLoader(false));
-      toast.success("Video uploaded successfully");
-    }
-  } catch (e: any) {
-    yield put(handleLoader(false));
-    toast.error(e.response?.data?.message || "Error in uploading video");
-  }
-}
-
 export function* getUserVideosSaga(action: { type: string; userId: string }) {
   try {
     const { data } = yield API.get(`videos/by-userId/${action.userId}`);
@@ -289,7 +265,12 @@ export function* getPopularMovies({ page }: { type: string; page: number }) {
   }
 }
 
-export function* getTopRatedMoviesSaga({ page }: { type: string; page: number }) {
+export function* getTopRatedMoviesSaga({
+  page,
+}: {
+  type: string;
+  page: number;
+}) {
   try {
     const { data } = yield axios.get(
       `${
@@ -322,7 +303,7 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_USER_DETAILS, getUserDetailsSaga);
   yield takeLatest(actionTypes.UPDATE_USER_DETAILS, updateUserDetailsSaga);
   yield takeLatest(actionTypes.GET_ALL_MESSAGES, getAllMessagesSaga);
-  yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
+  // yield takeLatest(actionTypes.CREATE_VIDEO, createVideoSaga);
   yield takeLatest(actionTypes.GET_USER_VIDEOS, getUserVideosSaga);
   yield takeLatest(actionTypes.UPDATE_VIDEO, updateVideoSaga);
   yield takeLatest(actionTypes.GET_ONE_VIDEO_BY_ID, getOneVideoByVideoIdSaga);
@@ -330,4 +311,5 @@ export default function* rootSaga() {
   yield takeLatest(actionTypes.GET_POPULAR_MOVIES, getPopularMovies);
   yield takeLatest(actionTypes.LOG_OUT, logoutUserSaga);
   yield takeLatest(actionTypes.GET_TOP_RATED_MOVIES, getTopRatedMoviesSaga);
+  yield takeLatest(actionTypes.VIDEO_PRESIGN_REQUEST, createVideoSaga);
 }
