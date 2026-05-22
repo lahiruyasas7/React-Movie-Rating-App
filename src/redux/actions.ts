@@ -34,6 +34,27 @@ export const actionTypes = {
   GET_TOP_RATED_MOVIES: "GET_TOP_RATED_MOVIES",
   GET_TOP_RATED_MOVIES_SUCCESS: "GET_TOP_RATED_MOVIES_SUCCESS",
   GET_TOP_RATED_MOVIES_FAIL: "GET_TOP_RATED_MOVIES_FAIL",
+  VIDEO_PRESIGN_REQUEST: "VIDEO_PRESIGN_REQUEST",
+  VIDEO_PRESIGN_SUCCESS: "VIDEO_PRESIGN_SUCCESS",
+  VIDEO_PRESIGN_FAILURE: "VIDEO_PRESIGN_FAILURE",
+
+  // Phase 2 — Upload directly to S3 (progress tracked client-side)
+  VIDEO_S3_UPLOAD_PROGRESS: "VIDEO_S3_UPLOAD_PROGRESS",
+  VIDEO_S3_UPLOAD_SUCCESS: "VIDEO_S3_UPLOAD_SUCCESS",
+  VIDEO_S3_UPLOAD_FAILURE: "VIDEO_S3_UPLOAD_FAILURE",
+
+  // Phase 3 — Confirm upload with backend
+  VIDEO_CONFIRM_REQUEST: "VIDEO_CONFIRM_REQUEST",
+  VIDEO_CONFIRM_SUCCESS: "VIDEO_CONFIRM_SUCCESS",
+  VIDEO_CONFIRM_FAILURE: "VIDEO_CONFIRM_FAILURE",
+
+  // Phase 4 — Poll processing status
+  VIDEO_POLL_STATUS: "VIDEO_POLL_STATUS",
+  VIDEO_POLL_SUCCESS: "VIDEO_POLL_SUCCESS",
+  VIDEO_POLL_FAILURE: "VIDEO_POLL_FAILURE",
+
+  // Reset
+  VIDEO_UPLOAD_RESET: "VIDEO_UPLOAD_RESET",
 };
 
 export interface registerDataType {
@@ -58,6 +79,26 @@ export interface updateVideoType {
   video?: File;
 }
 
+export type VideoUploadStatus =
+  | "idle"
+  | "presigning"
+  | "uploading"
+  | "confirming"
+  | "processing"
+  | "completed"
+  | "failed";
+
+export interface VideoPresignPayload {
+  name: string;
+  description: string;
+  mimetype: string;
+  originalName: string;
+  fileSize: number;
+}
+
+export interface CreateVideoPayload extends VideoPresignPayload {
+  file: File; // the actual File object — only used client-side, never sent to your server
+}
 export function getAllMovies() {
   return { type: actionTypes.GET_ALL_MOVIES };
 }
@@ -181,3 +222,72 @@ export const getTopRatedMovies = (page: number) => {
     page,
   };
 };
+
+export const videoPresignRequest = (
+  payload: CreateVideoPayload,
+  userId: string
+) => ({
+  type: actionTypes.VIDEO_PRESIGN_REQUEST,
+  payload,
+  userId,
+});
+
+export const videoPresignSuccess = (videoId: string, presignedUrl: string) => ({
+  type: actionTypes.VIDEO_PRESIGN_SUCCESS,
+  videoId,
+  presignedUrl,
+});
+
+export const videoPresignFailure = (error: string) => ({
+  type: actionTypes.VIDEO_PRESIGN_FAILURE,
+  error,
+});
+
+export const videoS3UploadProgress = (progress: number) => ({
+  type: actionTypes.VIDEO_S3_UPLOAD_PROGRESS,
+  progress,
+});
+
+export const videoS3UploadSuccess = () => ({
+  type: actionTypes.VIDEO_S3_UPLOAD_SUCCESS,
+});
+
+export const videoS3UploadFailure = (error: string) => ({
+  type: actionTypes.VIDEO_S3_UPLOAD_FAILURE,
+  error,
+});
+
+export const videoConfirmRequest = (videoId: string, userId: string) => ({
+  type: actionTypes.VIDEO_CONFIRM_REQUEST,
+  videoId,
+  userId,
+});
+
+export const videoConfirmSuccess = () => ({
+  type: actionTypes.VIDEO_CONFIRM_SUCCESS,
+});
+
+export const videoConfirmFailure = (error: string) => ({
+  type: actionTypes.VIDEO_CONFIRM_FAILURE,
+  error,
+});
+
+export const videoPollStatus = (videoId: string, userId: string) => ({
+  type: actionTypes.VIDEO_POLL_STATUS,
+  videoId,
+  userId,
+});
+
+export const videoPollSuccess = (s3Url: string) => ({
+  type: actionTypes.VIDEO_POLL_SUCCESS,
+  s3Url,
+});
+
+export const videoPollFailure = (error: string) => ({
+  type: actionTypes.VIDEO_POLL_FAILURE,
+  error,
+});
+
+export const videoUploadReset = () => ({
+  type: actionTypes.VIDEO_UPLOAD_RESET,
+});
