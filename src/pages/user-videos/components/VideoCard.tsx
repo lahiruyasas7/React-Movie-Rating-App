@@ -52,7 +52,13 @@ function VideoCard({ video }: { video: Video }) {
         src={video.s3Url}
         controls
         className="w-full h-48 object-cover bg-black"
-      ></video>
+      >
+        <source src={video.s3Url} type="video/mp4" />
+        <source src={video.s3Url} type="video/webm" />
+        <p className="text-white text-sm p-2">
+          Your browser does not support this video format.
+        </p>
+      </video>
 
       <div className="p-4">
         <h2 className="text-lg font-semibold truncate">{video.name}</h2>
