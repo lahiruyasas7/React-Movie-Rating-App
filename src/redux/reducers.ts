@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { actionTypes, getAllMessages } from "./actions";
+import { videoUploadReducer } from "./videos/videoReducer";
 
 const initialState = {
   moviesList: null,
@@ -108,6 +109,7 @@ const reducer = (state = initialState, action: any) => {
         ...state,
         topRatedMovies: null,
       };
+
     default:
       return state;
   }
@@ -115,6 +117,7 @@ const reducer = (state = initialState, action: any) => {
 
 const rootReducer = combineReducers({
   reducer,
+  videoUpload: videoUploadReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;
