@@ -1,6 +1,11 @@
 import axios from "axios";
 import { put, takeLatest } from "redux-saga/effects";
-import { actionTypes, handleLoader, registerDataType } from "./actions";
+import {
+  actionTypes,
+  getVideosByUserId,
+  handleLoader,
+  registerDataType,
+} from "./actions";
 import { API } from "../utils/axios";
 import { fireAlertError, jsonToFormData } from "../utils/customUtil";
 import { USER_ITEM } from "../utils/constants";
@@ -239,6 +244,7 @@ export function* deleteVideoSaga({
     if (response.status === 200) {
       toast.success("Video deleted successfully");
       yield put(handleLoader(false));
+      yield put(getVideosByUserId(userId));
     }
   } catch (e: any) {
     toast.error(e.response?.data?.message || "Error in deleting Video");
