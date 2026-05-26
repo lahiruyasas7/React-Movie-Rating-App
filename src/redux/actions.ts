@@ -196,10 +196,11 @@ export const getOneVideoByVideoId = (videoId: string) => {
   };
 };
 
-export const deleteVideo = (videoId: string) => {
+export const deleteVideo = (videoId: string, userId: string) => {
   return {
     type: actionTypes.DELETE_VIDEO,
     videoId,
+    userId,
   };
 };
 
