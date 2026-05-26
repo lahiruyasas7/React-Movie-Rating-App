@@ -39,7 +39,7 @@ function VideoCard({ video }: { video: Video }) {
     }).then((result) => {
       if (result.isConfirmed) {
         console.log("delete");
-        dispatch(deleteVideo(data.id));
+        dispatch(deleteVideo(data.id, data.userId));
       }
     });
   };
