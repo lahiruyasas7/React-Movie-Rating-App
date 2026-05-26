@@ -190,12 +190,13 @@ export function* getUserVideosSaga(action: { type: string; userId: string }) {
 
 export function* updateVideoSaga({
   videoId,
+  userId,
   payload,
 }: any): Generator<any, void, any> {
   try {
     yield put(handleLoader(true));
     const response = yield API.put(
-      `/videos/update/${videoId}`,
+      `/videos/${videoId}/user/${userId}`,
       jsonToFormData(payload),
       {
         headers: {

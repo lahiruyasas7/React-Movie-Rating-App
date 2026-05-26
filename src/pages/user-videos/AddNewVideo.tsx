@@ -160,11 +160,11 @@ const AddNewVideo = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (isUpdating && videoId) {
+    if (isUpdating && videoId && userDetails) {
       // Update flow — unchanged from original
       const payload: updateVideoType = { name, description };
       if (videoFile) payload.video = videoFile;
-      dispatch(updateVideo(videoId, payload));
+      dispatch(updateVideo(videoId, userDetails.userId, payload));
       return;
     }
 
