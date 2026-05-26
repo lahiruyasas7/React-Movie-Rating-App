@@ -198,12 +198,13 @@ const AddNewVideo = () => {
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* ── File Input ── */}
-        <div>
-          <label className="block text-sm font-medium mb-1">Video File</label>
-          <input
-            type="file"
-            accept="video/mp4,video/quicktime,video/webm,video/x-msvideo"
-            className="w-full"
+        {!isUpdating && (
+          <div>
+            <label className="block text-sm font-medium mb-1">Video File</label>
+            <input
+              type="file"
+              accept="video/mp4,video/quicktime,video/webm,video/x-msvideo"
+              className="w-full"
             onChange={handleVideoChange}
             disabled={isLoading}
           />
@@ -215,7 +216,7 @@ const AddNewVideo = () => {
               {videoFile.name} — {formatBytes(videoFile.size)}
             </p>
           )}
-        </div>
+        </div>)}
 
         {/* ── Video Preview ── */}
         <div className="mt-4 w-full rounded border-2 border-dashed border-zinc-700 bg-zinc-800 flex items-center justify-center aspect-video relative overflow-hidden">
