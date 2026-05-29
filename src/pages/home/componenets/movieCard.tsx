@@ -20,7 +20,16 @@ interface Movie {
   vote_count: number;
 }
 
+const PLACEHOLDER_IMG = "/placeholder-image.png";
+
 const MovieCard = ({ movieData }: { movieData: Movie }) => {
+
+   const posterSrc = movieData?.poster_path
+    ? `https://image.tmdb.org/t/p/w500${encodeURIComponent(movieData.poster_path)}`
+    : PLACEHOLDER_IMG;
+
+  // Early return for missing data — renders nothing rather than broken UI
+  if (!movieData) return null;
   return (
     <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
       <Card
@@ -34,7 +43,12 @@ const MovieCard = ({ movieData }: { movieData: Movie }) => {
         <img
           className="w-full h-[250px] object-fill rounded-t-2xl"
           alt={movieData?.title}
-          src={`https://image.tmdb.org/t/p/w500${movieData?.poster_path}`}
+          src={posterSrc}
+           //onError fallback prevents broken image icon when URL fails
+          onError={(e) => {
+            e.currentTarget.src = PLACEHOLDER_IMG;
+            e.currentTarget.onerror = null; // prevents infinite loop if placeholder also fails
+          }}
         />
 
         <CardBody className="px-4 pt-3 pb-2 text-gray-900">
