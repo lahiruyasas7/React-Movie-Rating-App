@@ -2,7 +2,25 @@ import { Label, Card, CardBody, CardTitle, Row, Col } from "reactstrap";
 import "../../../assests/css/home.css";
 import { Star } from "react-feather";
 
-const MovieCard = ({ movieData }: any) => {
+interface Movie {
+  adult: boolean;
+  backdrop_path: string;
+  genre_ids: number[];
+  id: number;
+  title: string;
+  original_language: string;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  release_date: string;
+  softcore: boolean;
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+}
+
+const MovieCard = ({ movieData }: { movieData: Movie }) => {
   return (
     <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
       <Card
