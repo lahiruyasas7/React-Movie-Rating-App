@@ -1,30 +1,12 @@
 import { Label, Card, CardBody, CardTitle, Row, Col } from "reactstrap";
 import "../../../assests/css/home.css";
 import { Star } from "react-feather";
-
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  title: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  softcore: boolean;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+import { MovieData } from "../../../types/types";
 
 const PLACEHOLDER_IMG = "/placeholder-image.png";
 
-const MovieCard = ({ movieData }: { movieData: Movie }) => {
-
-   const posterSrc = movieData?.poster_path
+const MovieCard = ({ movieData }: { movieData: MovieData }) => {
+  const posterSrc = movieData?.poster_path
     ? `https://image.tmdb.org/t/p/w500${encodeURIComponent(movieData.poster_path)}`
     : PLACEHOLDER_IMG;
 
@@ -44,7 +26,7 @@ const MovieCard = ({ movieData }: { movieData: Movie }) => {
           className="w-full h-[250px] object-fill rounded-t-2xl"
           alt={movieData?.title}
           src={posterSrc}
-           //onError fallback prevents broken image icon when URL fails
+          //onError fallback prevents broken image icon when URL fails
           onError={(e) => {
             e.currentTarget.src = PLACEHOLDER_IMG;
             e.currentTarget.onerror = null; // prevents infinite loop if placeholder also fails

@@ -2,29 +2,12 @@ import React from "react";
 import { Calendar, Globe, Star } from "react-feather";
 import { Rating } from "react-simple-star-rating";
 import { Col, Modal, ModalBody, ModalHeader, Row } from "reactstrap";
-
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: number[];
-  id: number;
-  title: string;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  softcore: boolean;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
+import { MovieData } from "../../../types/types";
 
 interface SingleViewModalProps {
   modal: boolean;
   toggle: any;
-  selectedMovieData: Movie | null;
+  selectedMovieData: MovieData | null;
 }
 
 const SingleViewModal: React.FC<SingleViewModalProps> = ({
