@@ -32,10 +32,30 @@ const SingleViewModal: React.FC<SingleViewModalProps> = ({
   toggle,
   selectedMovieData,
 }) => {
+  //    when the modal opens before data is ready
+  if (!selectedMovieData) return null;
+
+  const PLACEHOLDER_IMG = "/placeholder-image.png";
+
+  //Safe poster URL — handles null poster_path instead of producing "...w500undefined"
+  const posterSrc = selectedMovieData.poster_path
+    ? `https://image.tmdb.org/t/p/w500${encodeURIComponent(selectedMovieData.poster_path)}`
+    : PLACEHOLDER_IMG;
   return (
-    <Modal isOpen={modal} toggle={toggle} centered size="lg">
+    <Modal
+      isOpen={modal}
+      toggle={toggle}
+      centered
+      size="lg"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-overview"
+    >
       <div className="bg-gradient-to-br from-gray-800 via-zinc-900 to-black text-white rounded-lg">
-        <ModalHeader toggle={toggle} className="font-semibold text-lg">
+        <ModalHeader
+          id="modal-title"
+          toggle={toggle}
+          className="border-0 text-white [&_button]:text-white [&_button]:opacity-75 hover:[&_button]:opacity-100"
+        >
           {selectedMovieData?.title}
         </ModalHeader>
         <ModalBody>
@@ -45,11 +65,14 @@ const SingleViewModal: React.FC<SingleViewModalProps> = ({
                 className="w-full object-cover rounded-lg"
                 style={{ height: "auto" }}
                 alt={selectedMovieData?.title}
-                src={`https://image.tmdb.org/t/p/w500${selectedMovieData?.poster_path}`}
+                src={posterSrc}
               />
             </Col>
             <Col lg={6} className="space-y-3">
-              <h5 className="text-gray-300 font-medium leading-relaxed">
+              <h5
+                id="modal-overview"
+                className="text-gray-300 font-medium leading-relaxed"
+              >
                 {selectedMovieData?.overview}
               </h5>
 
