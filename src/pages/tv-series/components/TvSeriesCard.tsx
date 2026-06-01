@@ -4,8 +4,18 @@ import { Card, CardBody, CardTitle, Col, Label, Row } from "reactstrap";
 import { tvSeriesCardType } from "../../../types/types";
 
 function TvSeriesCard({ tvSeriesData }: { tvSeriesData: tvSeriesCardType }) {
+  const PLACEHOLDER_IMG = "/placeholder-image.png";
+
+  const posterSrc = tvSeriesData.poster_path
+    ? `https://image.tmdb.org/t/p/w500${encodeURIComponent(tvSeriesData.poster_path)}`
+    : PLACEHOLDER_IMG;
+
   return (
-    <div className="transition-transform transform hover:scale-105 duration-300 ease-in-out">
+    <div
+      className="transition-transform transform hover:scale-105 duration-300 ease-in-out"
+      role="button"
+      aria-label={`View details for ${tvSeriesData.name}`}
+    >
       <Card
         className="movie-card bg-gradient-to-br from-gray-800 via-zinc-900 to-black 
              hover:from-gray-700 hover:via-gray-800 hover:to-black 
@@ -17,7 +27,12 @@ function TvSeriesCard({ tvSeriesData }: { tvSeriesData: tvSeriesCardType }) {
         <img
           className="w-full h-[250px] object-fill rounded-t-2xl"
           alt={tvSeriesData?.name}
-          src={`https://image.tmdb.org/t/p/w500${tvSeriesData?.poster_path}`}
+          src={posterSrc}
+          //onError fallback — prevents broken image icon if URL 404s
+          onError={(e) => {
+            e.currentTarget.src = PLACEHOLDER_IMG;
+            e.currentTarget.onerror = null; // prevents infinite loop
+          }}
         />
 
         <CardBody className="px-4 pt-3 pb-2 text-gray-900">

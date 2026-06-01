@@ -181,10 +181,11 @@ export const getVideosByUserId = (userId: string) => {
   };
 };
 
-export const updateVideo = (videoId: string, payload: updateVideoType) => {
+export const updateVideo = (videoId: string, userId: string, payload: updateVideoType) => {
   return {
     type: actionTypes.UPDATE_VIDEO,
     videoId,
+    userId,
     payload,
   };
 };

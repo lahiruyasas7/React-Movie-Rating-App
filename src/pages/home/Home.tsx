@@ -4,19 +4,22 @@ import { getAllMovies } from "../../redux/actions";
 import MovieCard from "./componenets/movieCard";
 import SingleViewModal from "./componenets/singleViewModal";
 import { MovieData } from "../../types/types";
+import { RootState } from "../../redux/reducers";
 
 const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedMovieData, setSelectedMovieData] = useState({});
+  const [selectedMovieData, setSelectedMovieData] = useState<MovieData | null>(
+    null
+  );
   const dispatch = useDispatch();
 
-  const { moviesList } = useSelector((state: any) => state.reducer);
+  const { moviesList } = useSelector((state: RootState) => state.reducer);
 
   useEffect(() => {
     dispatch(getAllMovies());
   }, []);
 
-  const selectedCardHandler = (data: any) => {
+  const selectedCardHandler = (data: MovieData) => {
     setSelectedMovieData(data);
     setIsModalOpen(!isModalOpen);
   };
