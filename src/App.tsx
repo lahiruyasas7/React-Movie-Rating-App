@@ -6,25 +6,52 @@ import {
   useParams,
 } from "react-router-dom";
 import Navbar from "./components/navbar";
-import Auth from "./pages/auth/Auth";
-import Home from "./pages/home/Home";
 import Footer from "./components/footer";
-import RegisterPage from "./pages/auth/RegisterPage";
-import SaveMovies from "./pages/savedMovies/SaveMovies";
-import TvSeries from "./pages/tv-series/TvSeries";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Page404 from "./pages/page404/Page404";
-import UserProfile from "./pages/user-profile/UserProfile";
-import GoogleSuccess from "./pages/auth/GoogleSuccess";
-import ChatPage from "./pages/chat/Chat";
-import ChatListPage from "./pages/chat/ChatListpage";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/reducers";
 import LoaderOverlay from "./components/CustomLoader";
-import UserVideos from "./pages/user-videos/UserVideos";
-import AddNewVideo from "./pages/user-videos/AddNewVideo";
-import PopularMovies from "./pages/popular-movies/PopularMovies";
-import TopRatedMovies from "./pages/top-rated-movies/TopRatedMovies";
+import { lazy, Suspense } from "react";
+
+// Lazy-loaded route components
+const Home = lazy(() => import("./pages/home/Home"));
+const Auth = lazy(() => import("./pages/auth/Auth"));
+const RegisterPage = lazy(() => import("./pages/auth/RegisterPage"));
+const SaveMovies = lazy(() => import("./pages/savedMovies/SaveMovies"));
+const TvSeries = lazy(() => import("./pages/tv-series/TvSeries"));
+const UserProfile = lazy(() => import("./pages/user-profile/UserProfile"));
+const UserVideos = lazy(() => import("./pages/user-videos/UserVideos"));
+const AddNewVideo = lazy(() => import("./pages/user-videos/AddNewVideo"));
+const PopularMovies = lazy(() => import("./pages/popular-movies/PopularMovies"));
+const TopRatedMovies = lazy(() => import("./pages/top-rated-movies/TopRatedMovies"));
+const ChatPage = lazy(() => import("./pages/chat/Chat"));
+const ChatListPage = lazy(() => import("./pages/chat/ChatListpage"));
+const Page404 = lazy(() => import("./pages/page404/Page404"));
+const GoogleSuccess = lazy(() => import("./pages/auth/GoogleSuccess"));
+
+// Route-level Suspense fallback - lightweight skeleton
+function RouteSkeleton() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+      <div className="animate-pulse space-y-4 w-3/4 max-w-3xl">
+        <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+        <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="aspect-[2/3] bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Wrapper for dynamic chat route
+function ChatPageWrapper() {
+  const { targetUserId } = useParams();
+  return <>{targetUserId && <ChatPage targetUserId={targetUserId} />}</>;
+}
 
 function App() {
   const loader = useSelector((state: RootState) => state.reducer.loader);
@@ -34,22 +61,51 @@ function App() {
       <Router>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/auth" element={<Auth />} />
+          {/* Public routes with route-level Suspense */}
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<RouteSkeleton />}>
+                <Home />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/auth"
+            element={
+              <Suspense fallback={<RouteSkeleton />}>
+                <Auth />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Suspense fallback={<RouteSkeleton />}>
+                <RegisterPage />
+              </Suspense>
+            }
+          />
+          <Route path="/google-success" element={<GoogleSuccess />} />
+
+          {/* Protected routes with route-level Suspense */}
           <Route
             path="/rated"
             element={
               <ProtectedRoute>
-                <SaveMovies />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <SaveMovies />
+                </Suspense>
               </ProtectedRoute>
             }
           />
-          <Route path="/register" element={<RegisterPage />} />
           <Route
             path="/tv-series"
             element={
               <ProtectedRoute>
-                <TvSeries />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <TvSeries />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -57,7 +113,9 @@ function App() {
             path="/user-profile"
             element={
               <ProtectedRoute>
-                <UserProfile />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <UserProfile />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -65,7 +123,9 @@ function App() {
             path="/user-videos"
             element={
               <ProtectedRoute>
-                <UserVideos />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <UserVideos />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -73,15 +133,9 @@ function App() {
             path="/add-new-video"
             element={
               <ProtectedRoute>
-                <AddNewVideo />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <Page404 />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <AddNewVideo />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -89,15 +143,19 @@ function App() {
             path="/popular-movies"
             element={
               <ProtectedRoute>
-                <PopularMovies />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <PopularMovies />
+                </Suspense>
               </ProtectedRoute>
             }
           />
-           <Route
+          <Route
             path="/top-rated-movies"
             element={
               <ProtectedRoute>
-                <TopRatedMovies />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <TopRatedMovies />
+                </Suspense>
               </ProtectedRoute>
             }
           />
@@ -105,12 +163,32 @@ function App() {
             path="/chat-list-page"
             element={
               <ProtectedRoute>
-                <ChatListPage />
+                <Suspense fallback={<RouteSkeleton />}>
+                  <ChatListPage />
+                </Suspense>
               </ProtectedRoute>
             }
           />
-          <Route path="/google-success" element={<GoogleSuccess />} />
-          <Route path="/chat/:targetUserId" element={<ChatPageWrapper />} />
+          <Route
+            path="/chat/:targetUserId"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<RouteSkeleton />}>
+                  <ChatPageWrapper />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* 404 - no ProtectedRoute, accessible to all */}
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<RouteSkeleton />}>
+                <Page404 />
+              </Suspense>
+            }
+          />
         </Routes>
         <Footer />
       </Router>
@@ -119,8 +197,3 @@ function App() {
 }
 
 export default App;
-
-function ChatPageWrapper() {
-  const { targetUserId } = useParams();
-  return <>{targetUserId && <ChatPage targetUserId={targetUserId} />}</>;
-}
